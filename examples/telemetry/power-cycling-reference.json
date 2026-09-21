@@ -1,0 +1,192 @@
+[
+  {
+    "schema_version": "1.0.0",
+    "telemetry_id": "tel-pc-sic-ref-0000",
+    "module_id": "sic-ref-half-bridge-illustrative",
+    "test_id": "pc-sic-ref-illustrative-001",
+    "lot_id": "lot-illustrative-A",
+    "dataset_id": "ds-pc-sic-ref-synthetic-001",
+    "batch_id": "batch-illustrative-01",
+    "timestamp": "2024-01-15T12:00:00Z",
+    "cycle_number": 0,
+    "cycle_phase": "heating",
+    "measurements": [
+      {
+        "parameter": "VDS",
+        "status": "valid",
+        "origin": "measured",
+        "value": 400.0,
+        "unit": "V",
+        "uncertainty": 0.5,
+        "channel_id": "vds-high",
+        "instrument_id": "illustrative-daq-01"
+      },
+      {
+        "parameter": "ID",
+        "status": "valid",
+        "origin": "measured",
+        "value": 300.0,
+        "unit": "A",
+        "channel_id": "id-load"
+      },
+      {
+        "parameter": "Tj",
+        "status": "valid",
+        "origin": "measured",
+        "value": 42.0,
+        "unit": "C",
+        "sensor_id": "tj-est-ch0"
+      },
+      {
+        "parameter": "Tc",
+        "status": "valid",
+        "origin": "measured",
+        "value": 36.0,
+        "unit": "C",
+        "sensor_id": "tc-thermocouple-1"
+      },
+      {
+        "parameter": "RDS_on",
+        "status": "derived",
+        "origin": "derived",
+        "value": 4.6,
+        "unit": "mOhm",
+        "uncertainty": 0.1,
+        "derivation": {
+          "method": "illustrative RDS_on from VDS_on/ID (placeholder; no calculation engine)",
+          "input_parameters": ["VDS", "ID"],
+          "notes": "Synthetic fixture only; not a measured or verified device characteristic."
+        }
+      }
+    ],
+    "provenance": {
+      "data_origin": "synthetic",
+      "source_type": "illustrative_reference",
+      "source_file": "examples/telemetry/power-cycling-reference.json",
+      "source_dataset": "ds-pc-sic-ref-synthetic-001",
+      "acquisition_system": "smartess-m3-schema-fixture",
+      "imported_at": "2024-01-15T12:05:00Z",
+      "import_version": "1.0.0",
+      "notes": "Synthetic/illustrative telemetry for schema and validation testing. Not real production measurements."
+    }
+  },
+  {
+    "schema_version": "1.0.0",
+    "telemetry_id": "tel-pc-sic-ref-0001",
+    "module_id": "sic-ref-half-bridge-illustrative",
+    "test_id": "pc-sic-ref-illustrative-001",
+    "lot_id": "lot-illustrative-A",
+    "dataset_id": "ds-pc-sic-ref-synthetic-001",
+    "timestamp": "2024-01-15T12:00:06Z",
+    "cycle_number": 1,
+    "cycle_phase": "cooling",
+    "measurements": [
+      {
+        "parameter": "VDS",
+        "status": "valid",
+        "origin": "measured",
+        "value": 400.0,
+        "unit": "V"
+      },
+      {
+        "parameter": "ID",
+        "status": "valid",
+        "origin": "measured",
+        "value": 0.0,
+        "unit": "A"
+      },
+      {
+        "parameter": "Tj",
+        "status": "valid",
+        "origin": "measured",
+        "value": 148.0,
+        "unit": "C"
+      },
+      {
+        "parameter": "Tc",
+        "status": "missing",
+        "origin": "measured"
+      },
+      {
+        "parameter": "RDS_on",
+        "status": "valid",
+        "origin": "measured",
+        "value": 4.7,
+        "unit": "mOhm"
+      }
+    ],
+    "provenance": {
+      "data_origin": "synthetic",
+      "source_type": "illustrative_reference",
+      "notes": "Synthetic/illustrative telemetry. Tc missingness is explicit; not replaced with zero or interpolation."
+    }
+  },
+  {
+    "schema_version": "1.0.0",
+    "telemetry_id": "tel-pc-sic-ref-0002",
+    "module_id": "sic-ref-half-bridge-illustrative",
+    "test_id": "pc-sic-ref-illustrative-001",
+    "lot_id": "lot-illustrative-A",
+    "dataset_id": "ds-pc-sic-ref-synthetic-001",
+    "timestamp": "2024-01-15T12:00:12Z",
+    "cycle_number": 2,
+    "cycle_phase": "heating",
+    "measurements": [
+      {
+        "parameter": "VDS",
+        "status": "valid",
+        "origin": "measured",
+        "value": 400.0,
+        "unit": "V"
+      },
+      {
+        "parameter": "ID",
+        "status": "valid",
+        "origin": "measured",
+        "value": 300.0,
+        "unit": "A"
+      },
+      {
+        "parameter": "Tj",
+        "status": "valid",
+        "origin": "measured",
+        "value": 150.0,
+        "unit": "C"
+      },
+      {
+        "parameter": "Tc",
+        "status": "valid",
+        "origin": "measured",
+        "value": 88.0,
+        "unit": "C"
+      },
+      {
+        "parameter": "delta_Tj",
+        "status": "derived",
+        "origin": "derived",
+        "value": 108.0,
+        "unit": "C",
+        "derivation": {
+          "method": "illustrative delta_Tj = Tj_max_cycle - Tj_min_cycle (placeholder)",
+          "input_parameters": ["Tj"]
+        }
+      },
+      {
+        "parameter": "electrical_power",
+        "status": "derived",
+        "origin": "derived",
+        "value": 120000.0,
+        "unit": "W",
+        "derivation": {
+          "method": "illustrative P = VDS * ID (placeholder; no calculation engine)",
+          "input_parameters": ["VDS", "ID"]
+        }
+      }
+    ],
+    "provenance": {
+      "data_origin": "synthetic",
+      "source_type": "illustrative_reference",
+      "notes": "Synthetic/illustrative telemetry including derived delta_Tj and electrical_power. Not real production measurements."
+    }
+  }
+]

@@ -1,0 +1,1085 @@
+{
+  "$defs": {
+    "AcceptanceCriteriaReference": {
+      "additionalProperties": false,
+      "description": "Which ModuleProfile acceptance criteria apply to this test. Not a duplicate of the limits.",
+      "properties": {
+        "parameters": {
+          "items": {
+            "$ref": "#/$defs/HealthParameter"
+          },
+          "minItems": 1,
+          "title": "Parameters",
+          "type": "array"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "parameters"
+      ],
+      "title": "AcceptanceCriteriaReference",
+      "type": "object"
+    },
+    "CycleProfile": {
+      "additionalProperties": false,
+      "description": "Timing for cyclic tests such as power cycling.",
+      "properties": {
+        "target_cycles": {
+          "minimum": 1,
+          "title": "Target Cycles",
+          "type": "integer"
+        },
+        "heating_duration_s": {
+          "title": "Heating Duration S",
+          "type": "number"
+        },
+        "cooling_duration_s": {
+          "title": "Cooling Duration S",
+          "type": "number"
+        },
+        "dwell_time_s": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dwell Time S"
+        },
+        "cycle_duration_s": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cycle Duration S"
+        },
+        "cycle_frequency_Hz": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cycle Frequency Hz"
+        }
+      },
+      "required": [
+        "target_cycles",
+        "heating_duration_s",
+        "cooling_duration_s"
+      ],
+      "title": "CycleProfile",
+      "type": "object"
+    },
+    "ElectricalStress": {
+      "additionalProperties": false,
+      "description": "Applied electrical test conditions, not device ratings.",
+      "properties": {
+        "vds": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConditionValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConditionValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "vgs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConditionValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "vgs_on": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConditionValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "vgs_off": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConditionValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "switching_frequency": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConditionValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "duty_cycle_percent": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Duty Cycle Percent"
+        },
+        "gate_resistance": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConditionValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "electrical_power_W": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Electrical Power W"
+        }
+      },
+      "title": "ElectricalStress",
+      "type": "object"
+    },
+    "EnvironmentalConditions": {
+      "additionalProperties": false,
+      "properties": {
+        "ambient_temperature": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConditionValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "humidity_percent": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Humidity Percent"
+        },
+        "pressure_value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pressure Value"
+        },
+        "pressure_unit": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pressure Unit"
+        },
+        "atmosphere": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Atmosphere"
+        },
+        "cooling_method": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cooling Method"
+        }
+      },
+      "title": "EnvironmentalConditions",
+      "type": "object"
+    },
+    "HealthParameter": {
+      "enum": [
+        "RDS_on",
+        "VTH",
+        "IGSS",
+        "IDSS",
+        "VDS_on",
+        "VF",
+        "Tj",
+        "Tc",
+        "Ta",
+        "Rth",
+        "VDS",
+        "VGS",
+        "ID"
+      ],
+      "title": "HealthParameter",
+      "type": "string"
+    },
+    "HtgbConfiguration": {
+      "additionalProperties": false,
+      "description": "Minimum HTGB description: temperature, gate bias, duration.",
+      "properties": {
+        "temperature": {
+          "$ref": "#/$defs/TestConditionValue"
+        },
+        "duration_s": {
+          "title": "Duration S",
+          "type": "number"
+        },
+        "gate_bias": {
+          "$ref": "#/$defs/TestConditionValue"
+        },
+        "drain_source_condition": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Drain Source Condition"
+        }
+      },
+      "required": [
+        "temperature",
+        "duration_s",
+        "gate_bias"
+      ],
+      "title": "HtgbConfiguration",
+      "type": "object"
+    },
+    "HtolConfiguration": {
+      "additionalProperties": false,
+      "description": "Minimum HTOL description: temperature, duration, optional electrical bias.",
+      "properties": {
+        "temperature": {
+          "$ref": "#/$defs/TestConditionValue"
+        },
+        "duration_s": {
+          "title": "Duration S",
+          "type": "number"
+        },
+        "vds": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConditionValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConditionValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "vgs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConditionValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "temperature",
+        "duration_s"
+      ],
+      "title": "HtolConfiguration",
+      "type": "object"
+    },
+    "HtrbConfiguration": {
+      "additionalProperties": false,
+      "description": "Minimum HTRB description: temperature, reverse voltage, duration.",
+      "properties": {
+        "temperature": {
+          "$ref": "#/$defs/TestConditionValue"
+        },
+        "duration_s": {
+          "title": "Duration S",
+          "type": "number"
+        },
+        "reverse_voltage": {
+          "$ref": "#/$defs/TestConditionValue"
+        },
+        "bias_condition": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Bias Condition"
+        }
+      },
+      "required": [
+        "temperature",
+        "duration_s",
+        "reverse_voltage"
+      ],
+      "title": "HtrbConfiguration",
+      "type": "object"
+    },
+    "MeasurementChannel": {
+      "additionalProperties": false,
+      "description": "Declares a telemetry channel to collect. Stores no samples.",
+      "properties": {
+        "parameter": {
+          "$ref": "#/$defs/HealthParameter"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Unit"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "method_or_instrument": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Method Or Instrument"
+        }
+      },
+      "required": [
+        "parameter"
+      ],
+      "title": "MeasurementChannel",
+      "type": "object"
+    },
+    "MeasurementConfiguration": {
+      "additionalProperties": false,
+      "properties": {
+        "channels": {
+          "items": {
+            "$ref": "#/$defs/MeasurementChannel"
+          },
+          "minItems": 1,
+          "title": "Channels",
+          "type": "array"
+        },
+        "sampling_interval_s": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sampling Interval S"
+        },
+        "sampling_frequency_Hz": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sampling Frequency Hz"
+        }
+      },
+      "required": [
+        "channels"
+      ],
+      "title": "MeasurementConfiguration",
+      "type": "object"
+    },
+    "Provenance": {
+      "additionalProperties": false,
+      "description": "Source and verification metadata for a profile or a single specification.",
+      "properties": {
+        "source_type": {
+          "$ref": "#/$defs/SourceType"
+        },
+        "source_document": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Document"
+        },
+        "source_revision": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Revision"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Url"
+        },
+        "extraction_method": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Extraction Method"
+        },
+        "verified_by_engineer": {
+          "default": false,
+          "title": "Verified By Engineer",
+          "type": "boolean"
+        },
+        "verified_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verified At"
+        },
+        "page_or_section": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page Or Section"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "source_type"
+      ],
+      "title": "Provenance",
+      "type": "object"
+    },
+    "SourceType": {
+      "enum": [
+        "manufacturer_datasheet",
+        "technical_document",
+        "standard",
+        "manually_entered",
+        "automated_extraction",
+        "illustrative_reference"
+      ],
+      "title": "SourceType",
+      "type": "string"
+    },
+    "TestConditionValue": {
+      "additionalProperties": false,
+      "description": "A numeric test condition with an explicit unit.\n\n`value` is the applied or target condition. Ranges use min_value/max_value.",
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "min_value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Min Value"
+        },
+        "max_value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Value"
+        },
+        "unit": {
+          "$ref": "#/$defs/Unit"
+        },
+        "provenance": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Provenance"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "unit"
+      ],
+      "title": "TestConditionValue",
+      "type": "object"
+    },
+    "TestProfileProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "source_type": {
+          "$ref": "#/$defs/SourceType"
+        },
+        "source_document": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Document"
+        },
+        "source_revision": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Revision"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Url"
+        },
+        "created_by": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Created By"
+        },
+        "created_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Created At"
+        },
+        "configuration_version": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Configuration Version"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "source_type"
+      ],
+      "title": "TestProfileProvenance",
+      "type": "object"
+    },
+    "TestType": {
+      "enum": [
+        "power_cycling",
+        "HTOL",
+        "HTRB",
+        "HTGB",
+        "custom"
+      ],
+      "title": "TestType",
+      "type": "string"
+    },
+    "ThermalStress": {
+      "additionalProperties": false,
+      "description": "Applied thermal excursion / control setpoints.",
+      "properties": {
+        "tj_minimum": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConditionValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "tj_maximum": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConditionValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "delta_tj": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConditionValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "tc_minimum": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConditionValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "tc_maximum": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConditionValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "ambient_temperature_minimum": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConditionValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "ambient_temperature_maximum": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TestConditionValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "thermal_control_method": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Thermal Control Method"
+        },
+        "cooling_method": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cooling Method"
+        }
+      },
+      "title": "ThermalStress",
+      "type": "object"
+    },
+    "Unit": {
+      "enum": [
+        "V",
+        "A",
+        "mOhm",
+        "Ohm",
+        "uA",
+        "nC",
+        "C",
+        "C_per_W",
+        "W",
+        "mm",
+        "Hz"
+      ],
+      "title": "Unit",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "How a SiC module is stressed during a reliability test. References a ModuleProfile by module_profile_id. This object is not telemetry.",
+  "properties": {
+    "schema_version": {
+      "pattern": "^1\\.0\\.0$",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "test_id": {
+      "minLength": 1,
+      "title": "Test Id",
+      "type": "string"
+    },
+    "module_profile_id": {
+      "minLength": 1,
+      "title": "Module Profile Id",
+      "type": "string"
+    },
+    "test_type": {
+      "$ref": "#/$defs/TestType"
+    },
+    "objective": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Objective"
+    },
+    "electrical_stress": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ElectricalStress"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "thermal_stress": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ThermalStress"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "environmental_conditions": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/EnvironmentalConditions"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "cycle_profile": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CycleProfile"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "htol_configuration": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/HtolConfiguration"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "htrb_configuration": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/HtrbConfiguration"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "htgb_configuration": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/HtgbConfiguration"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "measurement_configuration": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/MeasurementConfiguration"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "acceptance_criteria_reference": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AcceptanceCriteriaReference"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "provenance": {
+      "$ref": "#/$defs/TestProfileProvenance"
+    }
+  },
+  "required": [
+    "schema_version",
+    "test_id",
+    "module_profile_id",
+    "test_type",
+    "provenance"
+  ],
+  "title": "SiC TestProfile",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://smartess.dev/schemas/test-profile.schema.json"
+}

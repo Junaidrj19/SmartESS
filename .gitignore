@@ -1,0 +1,50 @@
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+*.pem
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+
+# Node / Next.js
+node_modules/
+frontend/.next/
+frontend/out/
+frontend/dist/
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Databases and local stores
+*.db
+*.sqlite
+*.sqlite3
+chroma/
+.chroma/
+
+# Object / generated artifacts
+uploads/
+artifacts/
+*.parquet
+ml/datasets/synthetic/*/
+!ml/datasets/synthetic/README.md
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp

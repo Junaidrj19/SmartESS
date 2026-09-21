@@ -1,0 +1,1087 @@
+{
+  "$defs": {
+    "AcceptanceCriterion": {
+      "additionalProperties": false,
+      "description": "Conventional pass/fail limits. Not ML anomaly thresholds.",
+      "properties": {
+        "parameter": {
+          "$ref": "#/$defs/HealthParameter"
+        },
+        "maximum_absolute": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EngineeringValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "minimum_absolute": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EngineeringValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "maximum_relative_change_percent": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Maximum Relative Change Percent"
+        },
+        "maximum_allowed_shift": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EngineeringValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "parameter"
+      ],
+      "title": "AcceptanceCriterion",
+      "type": "object"
+    },
+    "Device": {
+      "additionalProperties": false,
+      "properties": {
+        "topology": {
+          "$ref": "#/$defs/Topology"
+        },
+        "switch_count": {
+          "minimum": 1,
+          "title": "Switch Count",
+          "type": "integer"
+        },
+        "mosfet_configuration": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mosfet Configuration"
+        },
+        "package": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Package"
+        },
+        "dimensions": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ModuleDimensions"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "topology",
+        "switch_count"
+      ],
+      "title": "Device",
+      "type": "object"
+    },
+    "ElectricalSpecifications": {
+      "additionalProperties": false,
+      "properties": {
+        "blocking_voltage": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/EngineeringValue"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Blocking Voltage"
+        },
+        "continuous_current": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/EngineeringValue"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Continuous Current"
+        },
+        "peak_current": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/EngineeringValue"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Peak Current"
+        },
+        "rds_on": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/EngineeringValue"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rds On"
+        },
+        "vgs_maximum": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/EngineeringValue"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vgs Maximum"
+        },
+        "vgs_on": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/EngineeringValue"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vgs On"
+        },
+        "vgs_off": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/EngineeringValue"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vgs Off"
+        },
+        "vth": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/EngineeringValue"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Vth"
+        },
+        "igss": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/EngineeringValue"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Igss"
+        },
+        "idss": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/EngineeringValue"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Idss"
+        },
+        "switching_frequency": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/EngineeringValue"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Switching Frequency"
+        }
+      },
+      "title": "ElectricalSpecifications",
+      "type": "object"
+    },
+    "EngineeringValue": {
+      "additionalProperties": false,
+      "description": "A single datasheet/engineering specification with unit, type, and conditions.\n\n`typical` is not a limit. `maximum_rating` is not a recommended operating condition.",
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "min_value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Min Value"
+        },
+        "max_value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Value"
+        },
+        "unit": {
+          "$ref": "#/$defs/Unit"
+        },
+        "specification_type": {
+          "$ref": "#/$defs/SpecificationType"
+        },
+        "conditions": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OperatingConditions"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "provenance": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Provenance"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "unit",
+        "specification_type"
+      ],
+      "title": "EngineeringValue",
+      "type": "object"
+    },
+    "FailureMechanismRef": {
+      "description": "Configuration references only \u2014 not confirmed diagnoses.",
+      "enum": [
+        "bond_wire_degradation",
+        "die_attach_degradation",
+        "gate_oxide_degradation",
+        "thermal_path_degradation"
+      ],
+      "title": "FailureMechanismRef",
+      "type": "string"
+    },
+    "GateDrive": {
+      "additionalProperties": false,
+      "properties": {
+        "recommended_positive_gate_voltage": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/EngineeringValue"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Recommended Positive Gate Voltage"
+        },
+        "recommended_negative_gate_voltage": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/EngineeringValue"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Recommended Negative Gate Voltage"
+        },
+        "gate_resistance": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/EngineeringValue"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Gate Resistance"
+        },
+        "total_gate_charge": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/EngineeringValue"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Total Gate Charge"
+        }
+      },
+      "title": "GateDrive",
+      "type": "object"
+    },
+    "HealthParameter": {
+      "enum": [
+        "RDS_on",
+        "VTH",
+        "IGSS",
+        "IDSS",
+        "VDS_on",
+        "VF",
+        "Tj",
+        "Tc",
+        "Ta",
+        "Rth",
+        "VDS",
+        "VGS",
+        "ID"
+      ],
+      "title": "HealthParameter",
+      "type": "string"
+    },
+    "HealthParameters": {
+      "additionalProperties": false,
+      "description": "Declares which parameters are relevant. Stores no measurements.",
+      "properties": {
+        "primary": {
+          "items": {
+            "$ref": "#/$defs/HealthParameter"
+          },
+          "title": "Primary",
+          "type": "array"
+        },
+        "secondary": {
+          "items": {
+            "$ref": "#/$defs/HealthParameter"
+          },
+          "title": "Secondary",
+          "type": "array"
+        }
+      },
+      "title": "HealthParameters",
+      "type": "object"
+    },
+    "ModuleDimensions": {
+      "additionalProperties": false,
+      "properties": {
+        "length": {
+          "title": "Length",
+          "type": "number"
+        },
+        "width": {
+          "title": "Width",
+          "type": "number"
+        },
+        "height": {
+          "title": "Height",
+          "type": "number"
+        },
+        "unit": {
+          "$ref": "#/$defs/Unit"
+        }
+      },
+      "required": [
+        "length",
+        "width",
+        "height",
+        "unit"
+      ],
+      "title": "ModuleDimensions",
+      "type": "object"
+    },
+    "ModuleIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "module_id": {
+          "minLength": 1,
+          "title": "Module Id",
+          "type": "string"
+        },
+        "manufacturer": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Manufacturer"
+        },
+        "part_number": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Part Number"
+        },
+        "device_family": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Device Family"
+        },
+        "technology": {
+          "$ref": "#/$defs/Technology"
+        },
+        "qualification": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Qualification"
+        },
+        "generation": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Generation"
+        },
+        "status": {
+          "$ref": "#/$defs/ProfileStatus"
+        }
+      },
+      "required": [
+        "module_id",
+        "technology",
+        "status"
+      ],
+      "title": "ModuleIdentity",
+      "type": "object"
+    },
+    "OperatingConditions": {
+      "additionalProperties": false,
+      "description": "Reference conditions for a specification value.\n\nIntentionally small. Later ingestion may extend this object without\nrequiring a generic condition language.",
+      "properties": {
+        "temperature_C": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Temperature C"
+        },
+        "voltage_V": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Voltage V"
+        },
+        "current_A": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Current A"
+        },
+        "gate_voltage_V": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Gate Voltage V"
+        },
+        "case_temperature_C": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Case Temperature C"
+        },
+        "junction_temperature_C": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Junction Temperature C"
+        }
+      },
+      "title": "OperatingConditions",
+      "type": "object"
+    },
+    "ProfileStatus": {
+      "enum": [
+        "draft",
+        "candidate",
+        "verified",
+        "deprecated"
+      ],
+      "title": "ProfileStatus",
+      "type": "string"
+    },
+    "Provenance": {
+      "additionalProperties": false,
+      "description": "Source and verification metadata for a profile or a single specification.",
+      "properties": {
+        "source_type": {
+          "$ref": "#/$defs/SourceType"
+        },
+        "source_document": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Document"
+        },
+        "source_revision": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Revision"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Url"
+        },
+        "extraction_method": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Extraction Method"
+        },
+        "verified_by_engineer": {
+          "default": false,
+          "title": "Verified By Engineer",
+          "type": "boolean"
+        },
+        "verified_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Verified At"
+        },
+        "page_or_section": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page Or Section"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "source_type"
+      ],
+      "title": "Provenance",
+      "type": "object"
+    },
+    "ReliabilityMetadata": {
+      "additionalProperties": false,
+      "description": "Knowledge/configuration references. Not diagnoses.",
+      "properties": {
+        "supported_tests": {
+          "items": {
+            "$ref": "#/$defs/ReliabilityTestType"
+          },
+          "title": "Supported Tests",
+          "type": "array"
+        },
+        "relevant_failure_mechanisms": {
+          "items": {
+            "$ref": "#/$defs/FailureMechanismRef"
+          },
+          "title": "Relevant Failure Mechanisms",
+          "type": "array"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        }
+      },
+      "title": "ReliabilityMetadata",
+      "type": "object"
+    },
+    "ReliabilityTestType": {
+      "enum": [
+        "power_cycling",
+        "HTOL",
+        "HTRB",
+        "HTGB"
+      ],
+      "title": "ReliabilityTestType",
+      "type": "string"
+    },
+    "SourceType": {
+      "enum": [
+        "manufacturer_datasheet",
+        "technical_document",
+        "standard",
+        "manually_entered",
+        "automated_extraction",
+        "illustrative_reference"
+      ],
+      "title": "SourceType",
+      "type": "string"
+    },
+    "SpecificationType": {
+      "enum": [
+        "typical",
+        "maximum",
+        "minimum",
+        "guaranteed",
+        "rating",
+        "maximum_rating",
+        "operating_range"
+      ],
+      "title": "SpecificationType",
+      "type": "string"
+    },
+    "Technology": {
+      "enum": [
+        "SiC MOSFET"
+      ],
+      "title": "Technology",
+      "type": "string"
+    },
+    "ThermalSpecifications": {
+      "additionalProperties": false,
+      "properties": {
+        "tj_maximum": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EngineeringValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "tj_minimum": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EngineeringValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "tc_maximum": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EngineeringValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "ambient_temperature_range": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/EngineeringValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "rth_j_c": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/EngineeringValue"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rth J C"
+        },
+        "thermal_impedance": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/EngineeringValue"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Thermal Impedance"
+        },
+        "cooling_method": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cooling Method"
+        }
+      },
+      "title": "ThermalSpecifications",
+      "type": "object"
+    },
+    "Topology": {
+      "enum": [
+        "single_switch",
+        "half_bridge",
+        "full_bridge",
+        "other"
+      ],
+      "title": "Topology",
+      "type": "string"
+    },
+    "Unit": {
+      "enum": [
+        "V",
+        "A",
+        "mOhm",
+        "Ohm",
+        "uA",
+        "nC",
+        "C",
+        "C_per_W",
+        "W",
+        "mm",
+        "Hz"
+      ],
+      "title": "Unit",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "pattern": "^1\\.0\\.0$",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "identity": {
+      "$ref": "#/$defs/ModuleIdentity"
+    },
+    "device": {
+      "$ref": "#/$defs/Device"
+    },
+    "electrical": {
+      "$ref": "#/$defs/ElectricalSpecifications"
+    },
+    "gate_drive": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/GateDrive"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "thermal": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ThermalSpecifications"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "health_parameters": {
+      "$ref": "#/$defs/HealthParameters"
+    },
+    "acceptance_criteria": {
+      "items": {
+        "$ref": "#/$defs/AcceptanceCriterion"
+      },
+      "title": "Acceptance Criteria",
+      "type": "array"
+    },
+    "reliability": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ReliabilityMetadata"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "provenance": {
+      "$ref": "#/$defs/Provenance"
+    }
+  },
+  "required": [
+    "schema_version",
+    "identity",
+    "device",
+    "provenance"
+  ],
+  "title": "SiC ModuleProfile",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://smartess.dev/schemas/sic-module-profile.schema.json",
+  "description": "Identity, electrical/thermal specifications, health-parameter selection, acceptance criteria, reliability metadata, and provenance for a configurable SiC MOSFET power module. This object is not telemetry."
+}

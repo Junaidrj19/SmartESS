@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0.0",
+  "test_id": "pc-sic-ref-illustrative-001",
+  "module_profile_id": "sic-ref-half-bridge-illustrative",
+  "test_type": "power_cycling",
+  "objective": "Illustrative power-cycling stress configuration for schema and validation testing.",
+  "electrical_stress": {
+    "vds": {
+      "value": 400,
+      "unit": "V"
+    },
+    "id": {
+      "value": 300,
+      "unit": "A"
+    },
+    "vgs_on": {
+      "value": 15,
+      "unit": "V"
+    },
+    "vgs_off": {
+      "value": -4,
+      "unit": "V"
+    },
+    "switching_frequency": {
+      "value": 10000,
+      "unit": "Hz"
+    },
+    "duty_cycle_percent": 50,
+    "gate_resistance": {
+      "value": 2.5,
+      "unit": "Ohm"
+    }
+  },
+  "thermal_stress": {
+    "tj_minimum": {
+      "value": 40,
+      "unit": "C"
+    },
+    "tj_maximum": {
+      "value": 150,
+      "unit": "C"
+    },
+    "delta_tj": {
+      "value": 110,
+      "unit": "C"
+    },
+    "tc_minimum": {
+      "value": 35,
+      "unit": "C"
+    },
+    "tc_maximum": {
+      "value": 90,
+      "unit": "C"
+    },
+    "thermal_control_method": "closed-loop junction-temperature targeting (illustrative)",
+    "cooling_method": "liquid cold plate (illustrative)"
+  },
+  "environmental_conditions": {
+    "ambient_temperature": {
+      "value": 25,
+      "unit": "C"
+    },
+    "atmosphere": "laboratory air (illustrative)"
+  },
+  "cycle_profile": {
+    "target_cycles": 100000,
+    "heating_duration_s": 2,
+    "cooling_duration_s": 4,
+    "dwell_time_s": 0,
+    "cycle_duration_s": 6
+  },
+  "measurement_configuration": {
+    "channels": [
+      { "parameter": "RDS_on", "unit": "mOhm" },
+      { "parameter": "VTH", "unit": "V" },
+      { "parameter": "IGSS", "unit": "uA" },
+      { "parameter": "Tj", "unit": "C" },
+      { "parameter": "Tc", "unit": "C" },
+      { "parameter": "VDS", "unit": "V" },
+      { "parameter": "VGS", "unit": "V" },
+      { "parameter": "ID", "unit": "A" }
+    ],
+    "sampling_interval_s": 1
+  },
+  "acceptance_criteria_reference": {
+    "parameters": ["RDS_on", "VTH", "IGSS", "Tj"],
+    "notes": "Refers to ModuleProfile acceptance_criteria; does not duplicate limit values."
+  },
+  "provenance": {
+    "source_type": "illustrative_reference",
+    "created_by": "smartess-m2-schema",
+    "configuration_version": "1.0.0",
+    "notes": "Illustrative/synthetic power-cycling configuration for schema and validation testing; not a verified manufacturer procedure or reliability-standard test plan. Values are placeholders."
+  }
+}

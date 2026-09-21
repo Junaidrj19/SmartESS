@@ -1,0 +1,271 @@
+{
+  "schema_version": "1.0.0",
+  "identity": {
+    "module_id": "sic-ref-half-bridge-illustrative",
+    "device_family": "illustrative 1200 V SiC half-bridge",
+    "technology": "SiC MOSFET",
+    "status": "draft"
+  },
+  "device": {
+    "topology": "half_bridge",
+    "switch_count": 2,
+    "mosfet_configuration": "two SiC MOSFET switches in a half-bridge",
+    "package": "illustrative power-module package",
+    "dimensions": {
+      "length": 62.0,
+      "width": 32.0,
+      "height": 17.0,
+      "unit": "mm"
+    }
+  },
+  "electrical": {
+    "blocking_voltage": [
+      {
+        "value": 1200,
+        "unit": "V",
+        "specification_type": "maximum_rating"
+      }
+    ],
+    "continuous_current": [
+      {
+        "value": 400,
+        "unit": "A",
+        "specification_type": "rating",
+        "conditions": {
+          "case_temperature_C": 80
+        }
+      }
+    ],
+    "peak_current": [
+      {
+        "value": 800,
+        "unit": "A",
+        "specification_type": "maximum"
+      }
+    ],
+    "rds_on": [
+      {
+        "value": 4.5,
+        "unit": "mOhm",
+        "specification_type": "typical",
+        "conditions": {
+          "junction_temperature_C": 25,
+          "gate_voltage_V": 15,
+          "current_A": 400
+        }
+      },
+      {
+        "value": 7.2,
+        "unit": "mOhm",
+        "specification_type": "typical",
+        "conditions": {
+          "junction_temperature_C": 150,
+          "gate_voltage_V": 15,
+          "current_A": 400
+        }
+      },
+      {
+        "value": 6.0,
+        "unit": "mOhm",
+        "specification_type": "maximum",
+        "conditions": {
+          "junction_temperature_C": 25,
+          "gate_voltage_V": 15
+        }
+      }
+    ],
+    "vgs_maximum": [
+      {
+        "value": 20,
+        "unit": "V",
+        "specification_type": "maximum_rating"
+      }
+    ],
+    "vgs_on": [
+      {
+        "value": 15,
+        "unit": "V",
+        "specification_type": "typical"
+      }
+    ],
+    "vgs_off": [
+      {
+        "value": -4,
+        "unit": "V",
+        "specification_type": "typical"
+      }
+    ],
+    "vth": [
+      {
+        "value": 2.8,
+        "unit": "V",
+        "specification_type": "typical",
+        "conditions": {
+          "junction_temperature_C": 25
+        }
+      },
+      {
+        "min_value": 1.8,
+        "max_value": 4.0,
+        "value": 1.8,
+        "unit": "V",
+        "specification_type": "guaranteed",
+        "conditions": {
+          "junction_temperature_C": 25
+        }
+      }
+    ],
+    "igss": [
+      {
+        "value": 0.5,
+        "unit": "uA",
+        "specification_type": "maximum",
+        "conditions": {
+          "gate_voltage_V": 20
+        }
+      }
+    ],
+    "idss": [
+      {
+        "value": 200,
+        "unit": "uA",
+        "specification_type": "maximum",
+        "conditions": {
+          "voltage_V": 1200,
+          "junction_temperature_C": 25
+        }
+      }
+    ]
+  },
+  "gate_drive": {
+    "recommended_positive_gate_voltage": [
+      {
+        "value": 15,
+        "unit": "V",
+        "specification_type": "typical"
+      }
+    ],
+    "recommended_negative_gate_voltage": [
+      {
+        "value": -4,
+        "unit": "V",
+        "specification_type": "typical"
+      }
+    ],
+    "gate_resistance": [
+      {
+        "value": 2.5,
+        "unit": "Ohm",
+        "specification_type": "typical"
+      }
+    ],
+    "total_gate_charge": [
+      {
+        "value": 900,
+        "unit": "nC",
+        "specification_type": "typical",
+        "conditions": {
+          "gate_voltage_V": 15,
+          "voltage_V": 600
+        }
+      }
+    ]
+  },
+  "thermal": {
+    "tj_maximum": {
+      "value": 175,
+      "unit": "C",
+      "specification_type": "maximum_rating"
+    },
+    "tj_minimum": {
+      "value": -40,
+      "unit": "C",
+      "specification_type": "minimum"
+    },
+    "tc_maximum": {
+      "value": 125,
+      "unit": "C",
+      "specification_type": "maximum_rating"
+    },
+    "ambient_temperature_range": {
+      "min_value": -40,
+      "max_value": 85,
+      "unit": "C",
+      "specification_type": "operating_range"
+    },
+    "rth_j_c": [
+      {
+        "value": 0.12,
+        "unit": "C_per_W",
+        "specification_type": "typical"
+      }
+    ],
+    "cooling_method": "liquid cold plate (illustrative)"
+  },
+  "health_parameters": {
+    "primary": ["RDS_on", "VTH", "Tj", "Rth"],
+    "secondary": ["IGSS", "IDSS", "VDS_on", "Tc", "Ta", "VDS", "VGS", "ID", "VF"]
+  },
+  "acceptance_criteria": [
+    {
+      "parameter": "RDS_on",
+      "maximum_absolute": {
+        "value": 8.0,
+        "unit": "mOhm",
+        "specification_type": "maximum"
+      },
+      "maximum_relative_change_percent": 20,
+      "notes": "Conventional screening limit, not an ML anomaly threshold."
+    },
+    {
+      "parameter": "VTH",
+      "minimum_absolute": {
+        "value": 1.5,
+        "unit": "V",
+        "specification_type": "minimum"
+      },
+      "maximum_absolute": {
+        "value": 4.5,
+        "unit": "V",
+        "specification_type": "maximum"
+      },
+      "maximum_allowed_shift": {
+        "value": 0.5,
+        "unit": "V",
+        "specification_type": "maximum"
+      }
+    },
+    {
+      "parameter": "IGSS",
+      "maximum_absolute": {
+        "value": 5.0,
+        "unit": "uA",
+        "specification_type": "maximum"
+      }
+    },
+    {
+      "parameter": "Tj",
+      "maximum_absolute": {
+        "value": 175,
+        "unit": "C",
+        "specification_type": "maximum_rating"
+      }
+    }
+  ],
+  "reliability": {
+    "supported_tests": ["power_cycling", "HTOL", "HTRB", "HTGB"],
+    "relevant_failure_mechanisms": [
+      "bond_wire_degradation",
+      "die_attach_degradation",
+      "gate_oxide_degradation",
+      "thermal_path_degradation"
+    ],
+    "notes": "Failure-mechanism entries are configuration references for later investigation, not confirmed diagnoses."
+  },
+  "provenance": {
+    "source_type": "illustrative_reference",
+    "extraction_method": "manually_authored_for_schema_tests",
+    "verified_by_engineer": false,
+    "notes": "Reference profile for schema and validation testing; not a verified production specification. Numeric values are placeholders and must not be treated as manufacturer datasheet facts."
+  }
+}

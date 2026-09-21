@@ -1,0 +1,569 @@
+{
+  "$defs": {
+    "CyclePhase": {
+      "enum": [
+        "heating",
+        "cooling",
+        "dwell",
+        "unknown"
+      ],
+      "title": "CyclePhase",
+      "type": "string"
+    },
+    "DataOrigin": {
+      "enum": [
+        "real",
+        "synthetic",
+        "simulated",
+        "unknown"
+      ],
+      "title": "DataOrigin",
+      "type": "string"
+    },
+    "DerivationProvenance": {
+      "additionalProperties": false,
+      "description": "How a derived value was obtained. Not a calculation engine.",
+      "properties": {
+        "method": {
+          "minLength": 1,
+          "title": "Method",
+          "type": "string"
+        },
+        "input_parameters": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/TelemetryParameter"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Input Parameters"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "method"
+      ],
+      "title": "DerivationProvenance",
+      "type": "object"
+    },
+    "Measurement": {
+      "additionalProperties": false,
+      "description": "One parameter observation at a telemetry timestamp.",
+      "properties": {
+        "parameter": {
+          "$ref": "#/$defs/TelemetryParameter"
+        },
+        "status": {
+          "$ref": "#/$defs/MeasurementStatus"
+        },
+        "origin": {
+          "$ref": "#/$defs/MeasurementOrigin"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Unit"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "uncertainty": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Uncertainty"
+        },
+        "sensor_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sensor Id"
+        },
+        "channel_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Channel Id"
+        },
+        "instrument_id": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Instrument Id"
+        },
+        "acquisition_system": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Acquisition System"
+        },
+        "conditions": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OperatingConditions"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "derivation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DerivationProvenance"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "parameter",
+        "status",
+        "origin"
+      ],
+      "title": "Measurement",
+      "type": "object"
+    },
+    "MeasurementOrigin": {
+      "description": "Whether the value was acquired or computed. Independent of quality status.",
+      "enum": [
+        "measured",
+        "derived"
+      ],
+      "title": "MeasurementOrigin",
+      "type": "string"
+    },
+    "MeasurementStatus": {
+      "enum": [
+        "valid",
+        "missing",
+        "invalid",
+        "estimated",
+        "derived"
+      ],
+      "title": "MeasurementStatus",
+      "type": "string"
+    },
+    "OperatingConditions": {
+      "additionalProperties": false,
+      "description": "Reference conditions for a specification value.\n\nIntentionally small. Later ingestion may extend this object without\nrequiring a generic condition language.",
+      "properties": {
+        "temperature_C": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Temperature C"
+        },
+        "voltage_V": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Voltage V"
+        },
+        "current_A": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Current A"
+        },
+        "gate_voltage_V": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Gate Voltage V"
+        },
+        "case_temperature_C": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Case Temperature C"
+        },
+        "junction_temperature_C": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Junction Temperature C"
+        }
+      },
+      "title": "OperatingConditions",
+      "type": "object"
+    },
+    "TelemetryParameter": {
+      "description": "Observation channels. Health-parameter members keep ModuleProfile names.",
+      "enum": [
+        "RDS_on",
+        "VTH",
+        "IGSS",
+        "IDSS",
+        "VDS_on",
+        "VF",
+        "Tj",
+        "Tc",
+        "Ta",
+        "Rth",
+        "VDS",
+        "VGS",
+        "ID",
+        "delta_Tj",
+        "electrical_power"
+      ],
+      "title": "TelemetryParameter",
+      "type": "string"
+    },
+    "TelemetryProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "data_origin": {
+          "$ref": "#/$defs/DataOrigin"
+        },
+        "source_type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TelemetrySourceType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "source_file": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source File"
+        },
+        "source_dataset": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Dataset"
+        },
+        "acquisition_system": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Acquisition System"
+        },
+        "imported_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Imported At"
+        },
+        "import_version": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Import Version"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Notes"
+        }
+      },
+      "required": [
+        "data_origin"
+      ],
+      "title": "TelemetryProvenance",
+      "type": "object"
+    },
+    "TelemetrySourceType": {
+      "enum": [
+        "csv",
+        "json",
+        "parquet",
+        "database_export",
+        "laboratory",
+        "illustrative_reference",
+        "unknown"
+      ],
+      "title": "TelemetrySourceType",
+      "type": "string"
+    },
+    "Unit": {
+      "enum": [
+        "V",
+        "A",
+        "mOhm",
+        "Ohm",
+        "uA",
+        "nC",
+        "C",
+        "C_per_W",
+        "W",
+        "mm",
+        "Hz"
+      ],
+      "title": "Unit",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "One timestamped observation during a reliability test. Identifies the module and test by id only. This object is not a ModuleProfile, TestProfile, ML output, or investigation record. Canonical timestamps are timezone-aware UTC.",
+  "properties": {
+    "schema_version": {
+      "pattern": "^1\\.0\\.0$",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "telemetry_id": {
+      "minLength": 1,
+      "title": "Telemetry Id",
+      "type": "string"
+    },
+    "module_id": {
+      "minLength": 1,
+      "title": "Module Id",
+      "type": "string"
+    },
+    "test_id": {
+      "minLength": 1,
+      "title": "Test Id",
+      "type": "string"
+    },
+    "timestamp": {
+      "format": "date-time",
+      "title": "Timestamp",
+      "type": "string"
+    },
+    "measurements": {
+      "items": {
+        "$ref": "#/$defs/Measurement"
+      },
+      "minItems": 1,
+      "title": "Measurements",
+      "type": "array"
+    },
+    "provenance": {
+      "$ref": "#/$defs/TelemetryProvenance"
+    },
+    "lot_id": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Lot Id"
+    },
+    "dataset_id": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Dataset Id"
+    },
+    "batch_id": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Batch Id"
+    },
+    "cycle_number": {
+      "anyOf": [
+        {
+          "minimum": 0,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Cycle Number"
+    },
+    "cycle_phase": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CyclePhase"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "schema_version",
+    "telemetry_id",
+    "module_id",
+    "test_id",
+    "timestamp",
+    "measurements",
+    "provenance"
+  ],
+  "title": "SmartESS TelemetryRecord",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://smartess.dev/schemas/telemetry.schema.json"
+}
