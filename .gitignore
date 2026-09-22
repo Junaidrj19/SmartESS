@@ -42,6 +42,8 @@ artifacts/
 *.parquet
 ml/datasets/synthetic/*/
 !ml/datasets/synthetic/README.md
+ml/models/*/
+ml/datasets/scores/*/
 
 # OS / editor
 .DS_Store

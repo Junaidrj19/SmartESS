@@ -2,7 +2,7 @@
 
 ## Repository State
 
-The repository is a **design-initialized, code-empty** project.
+The repository is a **design-initialized** project with M1–M6 implemented.
 
 Git is initialized on `main` with a configured GitHub remote (`https://github.com/Junaidrj19/SmartESS.git`). There are **no commits** yet. The only original tracked-intent files were:
 
@@ -49,11 +49,11 @@ From `tech-stack.md` MVP stack:
 | FastAPI / Pydantic / Uvicorn | Pydantic 2 only (no FastAPI/Uvicorn yet) |
 | Python project files (`pyproject.toml`, `requirements.txt`) | `pyproject.toml` present |
 | SQLAlchemy / SQLite | No |
-| NumPy / Pandas / Scikit-learn | NumPy, Pandas, PyArrow (generator); Scikit-learn not yet |
+| NumPy / Pandas / Scikit-learn | NumPy, Pandas, PyArrow, Scikit-learn |
 | LangChain / ChromaDB / Sentence Transformers | No |
 | Node package manager lockfile | No |
 | Docker | No |
-| Tests | ModuleProfile, TestProfile, and Telemetry tests in `backend/tests/` |
+| Tests | ModuleProfile, TestProfile, Telemetry, generator, dataset-validation, and feature-engineering tests in `backend/tests/` |
 
 **Python version:** `>=3.11` in `pyproject.toml`.  
 **Package manager:** pip / setuptools for Python. Node package manager not chosen yet.  
@@ -96,7 +96,7 @@ FastAPI Backend
         └── Engineering report
 ```
 
-**Implemented architecture today:** documented layout plus configuration and telemetry contracts (`backend/domain/module_profiles`, `backend/domain/test_profiles`, `backend/domain/telemetry`) and the M4 synthetic generator under `ml/generators/synthetic/`. No services, APIs, or persistence are running.
+**Implemented architecture today:** documented layout plus configuration and telemetry contracts (`backend/domain/module_profiles`, `backend/domain/test_profiles`, `backend/domain/telemetry`), the M4 synthetic generator under `ml/generators/synthetic/`, the M5 dataset validation engine under `ml/validators/synthetic/`, and the M6 versioned feature pipeline under `ml/features/`. No services, APIs, or persistence are running.
 
 ### Documented vs repository layout
 
@@ -151,8 +151,21 @@ Root `ml/` (datasets/generators) and `backend/ml/` (pipeline services) are **bot
 - Generator usage docs `docs/data-generation/synthetic-dataset-generator.md`
 - Generator tests `backend/tests/test_m4_synthetic_generator.py`
 - CLI `python3 -m ml.generators.synthetic.cli` / `scripts/generate_synthetic_dataset.py`
+- Dataset validation engine `ml/validators/synthetic/` (M5)
+- Validation docs `docs/data-validation/data-validation.md`
+- Validation tests `backend/tests/test_m5_data_validation.py`
+- CLI `python3 -m ml.validators.synthetic` / `scripts/validate_synthetic_dataset.py`
+- Versioned feature engineering `ml/features/` (M6)
+- Feature docs `docs/feature-engineering/feature-engineering.md`
+- Feature tests `backend/tests/test_m6_feature_engineering.py`
+- Feature CLI `scripts/build_features.py`
+- Feature artifacts (local) `ml/datasets/features/v1/`
+- Baseline anomaly detection `ml/anomaly/` (M7)
+- Anomaly docs `docs/anomaly-detection/anomaly-detection.md`
+- Anomaly tests `backend/tests/test_m7_anomaly_detection.py`
+- CLI `scripts/train_anomaly_model.py`
 
-**Placeholders only:** remaining `frontend/`, `backend/api/`, `backend/ml/`, agents, knowledge, and `knowledge_base/` paths. They contain no APIs, UI, agents, trained ML models, or persistence. Root `ml/generators/` is implemented for synthetic data; `ml/datasets/synthetic/` holds generated artifacts (gitignored).
+**Placeholders only:** remaining `frontend/`, `backend/api/`, `backend/ml/` service wrappers, agents, knowledge, and `knowledge_base/` paths. They contain no APIs, UI, or agents. Root `ml/` holds the generator, validator, features, and Isolation Forest detector.
 
 ## Missing Components
 
@@ -162,10 +175,8 @@ Everything required to run the product:
 - TestProfile SQLAlchemy models, API, UI (JSON Schema and Pydantic domain model are done)
 - Telemetry file ingestion (CSV / JSON / Parquet) and storage (JSON Schema and Pydantic domain model are done)
 - Physics-informed synthetic dataset generator (M4-B implemented; default synthetic parquet is development data, not production telemetry)
-- Data validation engine (PASS / WARNING / BLOCKED)
-- Data validation engine (PASS / WARNING / BLOCKED)
-- Feature engineering (versioned)
-- Baseline anomaly detection and model evaluation
+- Feature engineering (versioned; M6 complete)
+- Baseline Isolation Forest detector (M7 complete; additional candidates later)
 - Model registry
 - Investigation engine and deterministic tools
 - Reliability knowledge base and evidence records
@@ -190,9 +201,9 @@ Internal map used for upcoming work.
 | Test Profile | Config layer; `backend/domain/test_profiles` | JSON Schema, Pydantic domain model, validation, example, tests, docs | SQLAlchemy, API, UI |
 | Telemetry | Ingestion layer; `backend/domain/telemetry`; `/datasets` | JSON Schema, Pydantic observation model, validation, example, tests, docs | Ingestion, storage of raw files + DatasetMetadata |
 | Dataset generation | Synthetic data architecture §13; `ml/` generators | M4-A spec; M4-B generator `ml/generators/synthetic/`; parquet under `ml/datasets/synthetic/` | Later additional tests/module types; not a validated physics model |
-| Data validation | Data Quality Engine; Data Preparation Agent | Rules in PRD §16, agent-rules §6 | Validator, quality report, PASS/WARNING/BLOCKED |
-| Feature engineering | Data Intelligence; `backend/ml/features` | Feature catalog PRD §18, architecture §12 | Versioned feature pipeline |
-| ML pipeline | ML Intelligence; `backend/ml/*`; `/experiments`, `/models` | Training/eval/registry in architecture §15–18 | Profiling, splits, training, evaluation, registry |
+| Data validation | Data Quality Engine; Data Preparation Agent | M5 engine `ml/validators/synthetic/`; reports under `validation/`; CLI exit 0/1/2 | API/UI integration of validation status |
+| Feature engineering | Data Intelligence; `ml/features` | M6 versioned pipeline; v1 registry | API/UI |
+| ML pipeline | ML Intelligence; `ml/anomaly` plus later `backend/ml/*` | M7 Isolation Forest on v1 observation features; lot holdout; JSON registry | Additional candidates; promotion rules; API |
 | Agent orchestration | Agentic layer; `backend/agents/orchestrator` | Roles in architecture §19–20, agent-rules | Orchestrator + structured I/O contract |
 | Investigation | Investigation Agent + tools | Architecture §20–21 | Tool registry, investigation records |
 | Evidence retrieval | Knowledge layer; ChromaDB | Architecture §22–24, tech-stack §8–9 | Ingestion, embeddings, retrieval agent |
@@ -268,7 +279,86 @@ Do not skip ahead of the current milestone.
 
 ## Current Milestone
 
-**M4 — Synthetic Dataset Specification and Generator: COMPLETED**
+**M7 — Baseline Anomaly Detection: COMPLETED**
+
+Unsupervised Isolation Forest on M6 v1 **observation** features. Lot-level holdout. Ground truth is evaluation-only and is not used in `fit()`. Retrospective module aggregates are not model inputs. M1–M6 contracts are unchanged.
+
+Held-out evaluation on `syn-sic-pc-dev-001` (300 test-lot modules, seed 20260922), module-level max score vs train-calibrated threshold:
+
+- precision 0.8776
+- recall 0.4778
+- F1 0.6187
+- false-positive rate 0.0286
+
+Those metrics are split-specific and are not a universal accuracy claim. An anomaly is not a confirmed failure.
+
+Deliverables:
+
+| Artifact | Path |
+| --- | --- |
+| Detector package | `ml/anomaly/` |
+| CLI | `scripts/train_anomaly_model.py` |
+| Documentation | `docs/anomaly-detection/anomaly-detection.md` |
+| Tests | `backend/tests/test_m7_anomaly_detection.py` |
+| Registry / scores (local) | `ml/models/`, `ml/datasets/scores/` |
+
+**Next milestone: additional model evaluation / candidate comparison** (not started). Do not start the investigation engine in this milestone.
+
+### M6 — Versioned Feature Engineering: COMPLETED
+
+Deterministic, versioned, causal, leakage-safe feature contract (`feature_version = v1`) for consumption by M7. Authoritative registry: `ml/features/definitions.py`. Schema does not depend on incidental dataset missingness. Ground truth is never loaded. Raw M4 artifacts are not modified. M1–M5 contracts are unchanged.
+
+v1 observation schema: **7 identifiers + 153 features = 160 columns**.  
+v1 module schema: **918 aggregates + 7 metadata + 4 identifiers = 929 columns**.  
+Baseline/rolling signals (8): `RDS_on`, `VTH`, `IGSS`, `IDSS`, `VDS_on`, `electrical_power`, `Tj`, `Tc`. **VF is an electrical passthrough only** and is not in the v1 baseline/rolling set.
+
+Deliverables:
+
+| Artifact | Path |
+| --- | --- |
+| Feature package | `ml/features/` |
+| CLI | `scripts/build_features.py` |
+| Documentation | `docs/feature-engineering/feature-engineering.md` |
+| Tests | `backend/tests/test_m6_feature_engineering.py` |
+| Outputs (local) | `ml/datasets/features/v1/` |
+
+Validation commands and results (2026-09-22):
+
+```text
+python3 -m compileall -q backend ml
+python3 -m pytest -W error
+python3 scripts/build_features.py ml/datasets/synthetic/syn-smoke
+python3 scripts/build_features.py ml/datasets/synthetic/syn-sic-pc-dev-001
+```
+
+Outcomes: compileall succeeded; **210 passed, 0 failed, 0 skipped**. Smoke: 420 observation rows, 20 module rows, 160 observation columns, 929 module columns, 0.2208 s, M5 status **PASS**. Default `syn-sic-pc-dev-001`: 375750 observation rows, 750 module rows, 160 observation columns, 929 module columns, 110.3524 s, M5 status **PASS**. Parquet schemas match the registry. Source telemetry and ground truth were not modified.
+
+### M5 — Data Validation Engine: COMPLETED
+
+Independent dataset validation (not the M4 generator self-check). Inspects generated artifacts and classifies `PASS` / `WARNING` / `BLOCKED`. Source datasets are not modified. M1–M4 contracts are unchanged.
+
+Deliverables:
+
+| Artifact | Path |
+| --- | --- |
+| Validator package | `ml/validators/synthetic/` |
+| CLI | `ml/validators/synthetic/cli.py`, `scripts/validate_synthetic_dataset.py` |
+| Documentation | `docs/data-validation/data-validation.md` |
+| Tests | `backend/tests/test_m5_data_validation.py` |
+| Reports (local, gitignored with datasets) | `<dataset>/validation/validation-report.json`, `validation-report.md` |
+
+Validation commands and results (2026-09-21):
+
+```text
+python3 -m compileall -q backend ml
+python3 -m pytest -W error
+python3 scripts/validate_synthetic_dataset.py ml/datasets/synthetic/syn-smoke
+python3 scripts/validate_synthetic_dataset.py ml/datasets/synthetic/syn-sic-pc-dev-001
+```
+
+Outcomes: compileall succeeded; **173 passed, 0 failed, 0 skipped**. Smoke: **PASS**, 64 PASS / 0 WARNING / 0 BLOCKED, ~0.13 s. Default `syn-sic-pc-dev-001`: **PASS**, 64 PASS / 0 WARNING / 0 BLOCKED, ~6.7 s (375750 telemetry rows). No source dataset artifacts were overwritten (reports written under `validation/` only). M1–M4 contracts unchanged.
+
+### M4 — Synthetic Dataset Specification and Generator: COMPLETED
 
 M4-A (specification) and M4-B (generator) are complete. Generated artifacts are labeled `data_origin=synthetic` and are not production telemetry. Ground truth is a separate parquet file.
 
@@ -298,9 +388,7 @@ python3 -m ml.generators.synthetic.cli --dataset-id syn-smoke --n-modules 20 --n
 python3 -m ml.generators.synthetic.cli --dataset-id syn-sic-pc-dev-001 --seed 20260921
 ```
 
-Outcomes: compileall succeeded; **136 passed, 0 failed, 0 skipped**. Smoke: 20 modules, 420 telemetry rows, 0.10 s. Default `degradation_benchmark`: 750 modules, 5 lots, 375750 telemetry rows, 750 ground-truth rows, mix 525/75/75/75 (simulation allocation, not prevalence), ~7.1 s including generator validation, telemetry parquet ~48 MB. M1–M3 contracts unchanged.
-
-**Next milestone: Data validation engine (PASS / WARNING / BLOCKED)** (not started)
+Outcomes: compileall succeeded; **136 passed, 0 failed, 0 skipped**. Smoke: 20 modules, 420 telemetry rows, 0.10 s. Default `degradation_benchmark`: 750 modules, 5 lots, 375750 telemetry rows, 750 ground-truth rows, mix 525/75/75/75 (simulation allocation, not prevalence), ~7.1 s including generator validation, telemetry parquet ~48 MB. M1–M3 contracts unchanged. M5 subsequently added independent dataset validation.
 
 ### M4-A — Synthetic Dataset Specification: COMPLETED
 
@@ -424,4 +512,4 @@ No source document was modified.
 
 ## Validation
 
-Full suite: `python3 -m pytest -W error` — **136 passed, 0 failed, 0 skipped**. Includes ModuleProfile (M1), TestProfile (M2), Telemetry (M3), and synthetic generator (M4, 25). `python3 -m compileall -q backend ml` succeeded. No ruff/mypy/frontend toolchain is configured yet.
+Full suite: `python3 -m pytest -W error` — **218 passed, 0 failed, 0 skipped**. Includes ModuleProfile (M1), TestProfile (M2), Telemetry (M3), synthetic generator (M4), dataset validation (M5), feature engineering (M6), and anomaly detection (M7, 8). `python3 -m compileall -q backend ml` succeeded. No ruff/mypy/frontend toolchain is configured yet.
