@@ -1,0 +1,2371 @@
+{
+  "feature_version": "v1",
+  "feature_definition_registry_version": "v1",
+  "source_dataset_id": "syn-sic-pc-dev-001",
+  "source_schema_version": "1.0.0",
+  "generation_metadata": {
+    "source": "synthetic_dataset_generator",
+    "source_dataset_id": "syn-sic-pc-dev-001"
+  },
+  "validation_metadata": {
+    "validation_status": "PASS",
+    "validator_version": "1.0.0",
+    "validation_timestamp": "2026-09-21T13:31:43Z",
+    "source_dataset_id": "syn-sic-pc-dev-001",
+    "validation_report_reference": "validation/validation-report.json"
+  },
+  "feature_definitions": {
+    "version": "v1",
+    "feature_definition_count": 89,
+    "window_sizes": [
+      5,
+      10,
+      20
+    ],
+    "vf_baseline_rolling_policy": "VF is a v1 electrical passthrough feature only. It is not part of the v1 baseline or rolling signal set. Presence, absence, or all-NaN VF telemetry must not change the v1 feature schema.",
+    "features": [
+      {
+        "name": "normalized_cycle_position",
+        "family": "temporal",
+        "level": "observation",
+        "source_parameters": [
+          "cycle_number"
+        ],
+        "formula": "cycle_number / target_cycles",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "normalized_cycle_position"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Normalized position within the declared test using a priori target_cycles",
+        "dependencies": [],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "elapsed_time",
+        "family": "temporal",
+        "level": "observation",
+        "source_parameters": [
+          "timestamp"
+        ],
+        "formula": "timestamp - first_timestamp_by_cycle_order",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "elapsed_time"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Elapsed seconds since the first observation of the module in cycle order",
+        "dependencies": [],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "observation_index",
+        "family": "temporal",
+        "level": "observation",
+        "source_parameters": [
+          "cycle_number"
+        ],
+        "formula": "observation_index_within_module",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "observation_index"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "0-based observation index within the module after cycle ordering",
+        "dependencies": [],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "cycle_delta",
+        "family": "temporal",
+        "level": "observation",
+        "source_parameters": [
+          "cycle_number"
+        ],
+        "formula": "cycle_number - previous_cycle_number",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "cycle_delta"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Difference in cycle number from the previous observation",
+        "dependencies": [],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "RDS_on",
+        "family": "electrical",
+        "level": "observation",
+        "source_parameters": [
+          "RDS_on"
+        ],
+        "formula": "RDS_on",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "RDS_on"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Raw RDS_on measurement; missing values remain missing",
+        "dependencies": [],
+        "is_baseline_dependent": false,
+        "requires_temperature": true
+      },
+      {
+        "name": "VTH",
+        "family": "electrical",
+        "level": "observation",
+        "source_parameters": [
+          "VTH"
+        ],
+        "formula": "VTH",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "VTH"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Raw VTH measurement; missing values remain missing",
+        "dependencies": [],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "IGSS",
+        "family": "electrical",
+        "level": "observation",
+        "source_parameters": [
+          "IGSS"
+        ],
+        "formula": "IGSS",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "IGSS"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Raw IGSS measurement; missing values remain missing",
+        "dependencies": [],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "IDSS",
+        "family": "electrical",
+        "level": "observation",
+        "source_parameters": [
+          "IDSS"
+        ],
+        "formula": "IDSS",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "IDSS"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Raw IDSS measurement; missing values remain missing",
+        "dependencies": [],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "VDS_on",
+        "family": "electrical",
+        "level": "observation",
+        "source_parameters": [
+          "VDS_on"
+        ],
+        "formula": "VDS_on",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "VDS_on"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Raw VDS_on measurement; missing values remain missing",
+        "dependencies": [],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "VF",
+        "family": "electrical",
+        "level": "observation",
+        "source_parameters": [
+          "VF"
+        ],
+        "formula": "VF",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "VF"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Raw VF measurement; missing values remain missing",
+        "dependencies": [],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "VDS",
+        "family": "electrical",
+        "level": "observation",
+        "source_parameters": [
+          "VDS"
+        ],
+        "formula": "VDS",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "VDS"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Raw VDS measurement; missing values remain missing",
+        "dependencies": [],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "VGS",
+        "family": "electrical",
+        "level": "observation",
+        "source_parameters": [
+          "VGS"
+        ],
+        "formula": "VGS",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "VGS"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Raw VGS measurement; missing values remain missing",
+        "dependencies": [],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "ID",
+        "family": "electrical",
+        "level": "observation",
+        "source_parameters": [
+          "ID"
+        ],
+        "formula": "ID",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "ID"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Raw ID measurement; missing values remain missing",
+        "dependencies": [],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "electrical_power",
+        "family": "electrical",
+        "level": "observation",
+        "source_parameters": [
+          "electrical_power"
+        ],
+        "formula": "electrical_power",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "electrical_power"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Raw electrical_power measurement; missing values remain missing",
+        "dependencies": [],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "Tj",
+        "family": "thermal",
+        "level": "observation",
+        "source_parameters": [
+          "Tj"
+        ],
+        "formula": "Tj",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "Tj"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Raw Tj measurement; missing values remain missing",
+        "dependencies": [],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "Tc",
+        "family": "thermal",
+        "level": "observation",
+        "source_parameters": [
+          "Tc"
+        ],
+        "formula": "Tc",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "Tc"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Raw Tc measurement; missing values remain missing",
+        "dependencies": [],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "Ta",
+        "family": "thermal",
+        "level": "observation",
+        "source_parameters": [
+          "Ta"
+        ],
+        "formula": "Ta",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "Ta"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Raw Ta measurement; missing values remain missing",
+        "dependencies": [],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "delta_Tj",
+        "family": "thermal",
+        "level": "observation",
+        "source_parameters": [
+          "delta_Tj"
+        ],
+        "formula": "delta_Tj",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "delta_Tj"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Declared junction temperature delta for the cycle",
+        "dependencies": [],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "Tj_minus_Tc",
+        "family": "thermal",
+        "level": "observation",
+        "source_parameters": [
+          "Tj",
+          "Tc"
+        ],
+        "formula": "Tj - Tc",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "Tj_minus_Tc"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Junction-to-case temperature difference from current observations only",
+        "dependencies": [],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "temperature_normalized_RDS_on",
+        "family": "thermal",
+        "level": "observation",
+        "source_parameters": [
+          "RDS_on",
+          "Tj"
+        ],
+        "formula": "RDS_on / (R_type(Tj) / R_type(T_ref))",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "temperature_normalized_RDS_on"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "RDS_on normalized to T_ref using the M4 linear type curve",
+        "dependencies": [
+          "RDS_on",
+          "Tj"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": true
+      },
+      {
+        "name": "RDS_on_baseline_median",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "RDS_on"
+        ],
+        "formula": "median(RDS_on) over early-life baseline window",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "RDS_on_baseline_median"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "baseline median for RDS_on",
+        "dependencies": [
+          "RDS_on"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "RDS_on_delta_from_baseline",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "RDS_on"
+        ],
+        "formula": "RDS_on - RDS_on_baseline_median",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "RDS_on_delta_from_baseline"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "delta from baseline for RDS_on",
+        "dependencies": [
+          "RDS_on"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "RDS_on_pct_change_from_baseline",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "RDS_on"
+        ],
+        "formula": "(RDS_on - RDS_on_baseline_median) / RDS_on_baseline_median * 100",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "RDS_on_pct_change_from_baseline"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "pct change from baseline for RDS_on",
+        "dependencies": [
+          "RDS_on"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "RDS_on_robust_normalized_deviation",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "RDS_on"
+        ],
+        "formula": "(RDS_on - RDS_on_baseline_median) / (1.4826 * MAD(RDS_on) over baseline window)",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "RDS_on_robust_normalized_deviation"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "robust normalized deviation for RDS_on",
+        "dependencies": [
+          "RDS_on"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "VTH_baseline_median",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "VTH"
+        ],
+        "formula": "median(VTH) over early-life baseline window",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "VTH_baseline_median"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "baseline median for VTH",
+        "dependencies": [
+          "VTH"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "VTH_delta_from_baseline",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "VTH"
+        ],
+        "formula": "VTH - VTH_baseline_median",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "VTH_delta_from_baseline"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "delta from baseline for VTH",
+        "dependencies": [
+          "VTH"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "VTH_pct_change_from_baseline",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "VTH"
+        ],
+        "formula": "(VTH - VTH_baseline_median) / VTH_baseline_median * 100",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "VTH_pct_change_from_baseline"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "pct change from baseline for VTH",
+        "dependencies": [
+          "VTH"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "VTH_robust_normalized_deviation",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "VTH"
+        ],
+        "formula": "(VTH - VTH_baseline_median) / (1.4826 * MAD(VTH) over baseline window)",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "VTH_robust_normalized_deviation"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "robust normalized deviation for VTH",
+        "dependencies": [
+          "VTH"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "IGSS_baseline_median",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "IGSS"
+        ],
+        "formula": "median(IGSS) over early-life baseline window",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "IGSS_baseline_median"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "baseline median for IGSS",
+        "dependencies": [
+          "IGSS"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "IGSS_delta_from_baseline",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "IGSS"
+        ],
+        "formula": "IGSS - IGSS_baseline_median",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "IGSS_delta_from_baseline"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "delta from baseline for IGSS",
+        "dependencies": [
+          "IGSS"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "IGSS_pct_change_from_baseline",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "IGSS"
+        ],
+        "formula": "(IGSS - IGSS_baseline_median) / IGSS_baseline_median * 100",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "IGSS_pct_change_from_baseline"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "pct change from baseline for IGSS",
+        "dependencies": [
+          "IGSS"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "IGSS_robust_normalized_deviation",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "IGSS"
+        ],
+        "formula": "(IGSS - IGSS_baseline_median) / (1.4826 * MAD(IGSS) over baseline window)",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "IGSS_robust_normalized_deviation"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "robust normalized deviation for IGSS",
+        "dependencies": [
+          "IGSS"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "IDSS_baseline_median",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "IDSS"
+        ],
+        "formula": "median(IDSS) over early-life baseline window",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "IDSS_baseline_median"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "baseline median for IDSS",
+        "dependencies": [
+          "IDSS"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "IDSS_delta_from_baseline",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "IDSS"
+        ],
+        "formula": "IDSS - IDSS_baseline_median",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "IDSS_delta_from_baseline"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "delta from baseline for IDSS",
+        "dependencies": [
+          "IDSS"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "IDSS_pct_change_from_baseline",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "IDSS"
+        ],
+        "formula": "(IDSS - IDSS_baseline_median) / IDSS_baseline_median * 100",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "IDSS_pct_change_from_baseline"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "pct change from baseline for IDSS",
+        "dependencies": [
+          "IDSS"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "IDSS_robust_normalized_deviation",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "IDSS"
+        ],
+        "formula": "(IDSS - IDSS_baseline_median) / (1.4826 * MAD(IDSS) over baseline window)",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "IDSS_robust_normalized_deviation"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "robust normalized deviation for IDSS",
+        "dependencies": [
+          "IDSS"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "VDS_on_baseline_median",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "VDS_on"
+        ],
+        "formula": "median(VDS_on) over early-life baseline window",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "VDS_on_baseline_median"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "baseline median for VDS_on",
+        "dependencies": [
+          "VDS_on"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "VDS_on_delta_from_baseline",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "VDS_on"
+        ],
+        "formula": "VDS_on - VDS_on_baseline_median",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "VDS_on_delta_from_baseline"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "delta from baseline for VDS_on",
+        "dependencies": [
+          "VDS_on"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "VDS_on_pct_change_from_baseline",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "VDS_on"
+        ],
+        "formula": "(VDS_on - VDS_on_baseline_median) / VDS_on_baseline_median * 100",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "VDS_on_pct_change_from_baseline"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "pct change from baseline for VDS_on",
+        "dependencies": [
+          "VDS_on"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "VDS_on_robust_normalized_deviation",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "VDS_on"
+        ],
+        "formula": "(VDS_on - VDS_on_baseline_median) / (1.4826 * MAD(VDS_on) over baseline window)",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "VDS_on_robust_normalized_deviation"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "robust normalized deviation for VDS_on",
+        "dependencies": [
+          "VDS_on"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "electrical_power_baseline_median",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "electrical_power"
+        ],
+        "formula": "median(electrical_power) over early-life baseline window",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "electrical_power_baseline_median"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "baseline median for electrical_power",
+        "dependencies": [
+          "electrical_power"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "electrical_power_delta_from_baseline",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "electrical_power"
+        ],
+        "formula": "electrical_power - electrical_power_baseline_median",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "electrical_power_delta_from_baseline"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "delta from baseline for electrical_power",
+        "dependencies": [
+          "electrical_power"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "electrical_power_pct_change_from_baseline",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "electrical_power"
+        ],
+        "formula": "(electrical_power - electrical_power_baseline_median) / electrical_power_baseline_median * 100",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "electrical_power_pct_change_from_baseline"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "pct change from baseline for electrical_power",
+        "dependencies": [
+          "electrical_power"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "electrical_power_robust_normalized_deviation",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "electrical_power"
+        ],
+        "formula": "(electrical_power - electrical_power_baseline_median) / (1.4826 * MAD(electrical_power) over baseline window)",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "electrical_power_robust_normalized_deviation"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "robust normalized deviation for electrical_power",
+        "dependencies": [
+          "electrical_power"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "Tj_baseline_median",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "Tj"
+        ],
+        "formula": "median(Tj) over early-life baseline window",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "Tj_baseline_median"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "baseline median for Tj",
+        "dependencies": [
+          "Tj"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "Tj_delta_from_baseline",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "Tj"
+        ],
+        "formula": "Tj - Tj_baseline_median",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "Tj_delta_from_baseline"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "delta from baseline for Tj",
+        "dependencies": [
+          "Tj"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "Tj_pct_change_from_baseline",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "Tj"
+        ],
+        "formula": "(Tj - Tj_baseline_median) / Tj_baseline_median * 100",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "Tj_pct_change_from_baseline"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "pct change from baseline for Tj",
+        "dependencies": [
+          "Tj"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "Tj_robust_normalized_deviation",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "Tj"
+        ],
+        "formula": "(Tj - Tj_baseline_median) / (1.4826 * MAD(Tj) over baseline window)",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "Tj_robust_normalized_deviation"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "robust normalized deviation for Tj",
+        "dependencies": [
+          "Tj"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "Tc_baseline_median",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "Tc"
+        ],
+        "formula": "median(Tc) over early-life baseline window",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "Tc_baseline_median"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "baseline median for Tc",
+        "dependencies": [
+          "Tc"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "Tc_delta_from_baseline",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "Tc"
+        ],
+        "formula": "Tc - Tc_baseline_median",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "Tc_delta_from_baseline"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "delta from baseline for Tc",
+        "dependencies": [
+          "Tc"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "Tc_pct_change_from_baseline",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "Tc"
+        ],
+        "formula": "(Tc - Tc_baseline_median) / Tc_baseline_median * 100",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "Tc_pct_change_from_baseline"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "pct change from baseline for Tc",
+        "dependencies": [
+          "Tc"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "Tc_robust_normalized_deviation",
+        "family": "baseline_relative",
+        "level": "observation",
+        "source_parameters": [
+          "Tc"
+        ],
+        "formula": "(Tc - Tc_baseline_median) / (1.4826 * MAD(Tc) over baseline window)",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "Tc_robust_normalized_deviation"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "robust normalized deviation for Tc",
+        "dependencies": [
+          "Tc"
+        ],
+        "is_baseline_dependent": true,
+        "requires_temperature": false
+      },
+      {
+        "name": "RDS_on_rolling_mean",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "RDS_on"
+        ],
+        "formula": "trailing_rolling_mean(RDS_on, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "RDS_on_rolling_mean_5",
+          "RDS_on_rolling_mean_10",
+          "RDS_on_rolling_mean_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling mean of RDS_on",
+        "dependencies": [
+          "RDS_on"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "RDS_on_rolling_median",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "RDS_on"
+        ],
+        "formula": "trailing_rolling_median(RDS_on, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "RDS_on_rolling_median_5",
+          "RDS_on_rolling_median_10",
+          "RDS_on_rolling_median_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling median of RDS_on",
+        "dependencies": [
+          "RDS_on"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "RDS_on_rolling_std",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "RDS_on"
+        ],
+        "formula": "trailing_rolling_std(RDS_on, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "RDS_on_rolling_std_5",
+          "RDS_on_rolling_std_10",
+          "RDS_on_rolling_std_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling std of RDS_on",
+        "dependencies": [
+          "RDS_on"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "RDS_on_rolling_mad",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "RDS_on"
+        ],
+        "formula": "trailing_rolling_mad(RDS_on, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "RDS_on_rolling_mad_5",
+          "RDS_on_rolling_mad_10",
+          "RDS_on_rolling_mad_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling mad of RDS_on",
+        "dependencies": [
+          "RDS_on"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "VTH_rolling_mean",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "VTH"
+        ],
+        "formula": "trailing_rolling_mean(VTH, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "VTH_rolling_mean_5",
+          "VTH_rolling_mean_10",
+          "VTH_rolling_mean_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling mean of VTH",
+        "dependencies": [
+          "VTH"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "VTH_rolling_median",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "VTH"
+        ],
+        "formula": "trailing_rolling_median(VTH, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "VTH_rolling_median_5",
+          "VTH_rolling_median_10",
+          "VTH_rolling_median_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling median of VTH",
+        "dependencies": [
+          "VTH"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "VTH_rolling_std",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "VTH"
+        ],
+        "formula": "trailing_rolling_std(VTH, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "VTH_rolling_std_5",
+          "VTH_rolling_std_10",
+          "VTH_rolling_std_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling std of VTH",
+        "dependencies": [
+          "VTH"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "VTH_rolling_mad",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "VTH"
+        ],
+        "formula": "trailing_rolling_mad(VTH, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "VTH_rolling_mad_5",
+          "VTH_rolling_mad_10",
+          "VTH_rolling_mad_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling mad of VTH",
+        "dependencies": [
+          "VTH"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "IGSS_rolling_mean",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "IGSS"
+        ],
+        "formula": "trailing_rolling_mean(IGSS, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "IGSS_rolling_mean_5",
+          "IGSS_rolling_mean_10",
+          "IGSS_rolling_mean_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling mean of IGSS",
+        "dependencies": [
+          "IGSS"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "IGSS_rolling_median",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "IGSS"
+        ],
+        "formula": "trailing_rolling_median(IGSS, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "IGSS_rolling_median_5",
+          "IGSS_rolling_median_10",
+          "IGSS_rolling_median_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling median of IGSS",
+        "dependencies": [
+          "IGSS"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "IGSS_rolling_std",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "IGSS"
+        ],
+        "formula": "trailing_rolling_std(IGSS, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "IGSS_rolling_std_5",
+          "IGSS_rolling_std_10",
+          "IGSS_rolling_std_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling std of IGSS",
+        "dependencies": [
+          "IGSS"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "IGSS_rolling_mad",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "IGSS"
+        ],
+        "formula": "trailing_rolling_mad(IGSS, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "IGSS_rolling_mad_5",
+          "IGSS_rolling_mad_10",
+          "IGSS_rolling_mad_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling mad of IGSS",
+        "dependencies": [
+          "IGSS"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "IDSS_rolling_mean",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "IDSS"
+        ],
+        "formula": "trailing_rolling_mean(IDSS, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "IDSS_rolling_mean_5",
+          "IDSS_rolling_mean_10",
+          "IDSS_rolling_mean_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling mean of IDSS",
+        "dependencies": [
+          "IDSS"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "IDSS_rolling_median",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "IDSS"
+        ],
+        "formula": "trailing_rolling_median(IDSS, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "IDSS_rolling_median_5",
+          "IDSS_rolling_median_10",
+          "IDSS_rolling_median_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling median of IDSS",
+        "dependencies": [
+          "IDSS"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "IDSS_rolling_std",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "IDSS"
+        ],
+        "formula": "trailing_rolling_std(IDSS, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "IDSS_rolling_std_5",
+          "IDSS_rolling_std_10",
+          "IDSS_rolling_std_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling std of IDSS",
+        "dependencies": [
+          "IDSS"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "IDSS_rolling_mad",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "IDSS"
+        ],
+        "formula": "trailing_rolling_mad(IDSS, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "IDSS_rolling_mad_5",
+          "IDSS_rolling_mad_10",
+          "IDSS_rolling_mad_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling mad of IDSS",
+        "dependencies": [
+          "IDSS"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "VDS_on_rolling_mean",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "VDS_on"
+        ],
+        "formula": "trailing_rolling_mean(VDS_on, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "VDS_on_rolling_mean_5",
+          "VDS_on_rolling_mean_10",
+          "VDS_on_rolling_mean_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling mean of VDS_on",
+        "dependencies": [
+          "VDS_on"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "VDS_on_rolling_median",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "VDS_on"
+        ],
+        "formula": "trailing_rolling_median(VDS_on, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "VDS_on_rolling_median_5",
+          "VDS_on_rolling_median_10",
+          "VDS_on_rolling_median_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling median of VDS_on",
+        "dependencies": [
+          "VDS_on"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "VDS_on_rolling_std",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "VDS_on"
+        ],
+        "formula": "trailing_rolling_std(VDS_on, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "VDS_on_rolling_std_5",
+          "VDS_on_rolling_std_10",
+          "VDS_on_rolling_std_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling std of VDS_on",
+        "dependencies": [
+          "VDS_on"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "VDS_on_rolling_mad",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "VDS_on"
+        ],
+        "formula": "trailing_rolling_mad(VDS_on, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "VDS_on_rolling_mad_5",
+          "VDS_on_rolling_mad_10",
+          "VDS_on_rolling_mad_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling mad of VDS_on",
+        "dependencies": [
+          "VDS_on"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "electrical_power_rolling_mean",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "electrical_power"
+        ],
+        "formula": "trailing_rolling_mean(electrical_power, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "electrical_power_rolling_mean_5",
+          "electrical_power_rolling_mean_10",
+          "electrical_power_rolling_mean_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling mean of electrical_power",
+        "dependencies": [
+          "electrical_power"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "electrical_power_rolling_median",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "electrical_power"
+        ],
+        "formula": "trailing_rolling_median(electrical_power, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "electrical_power_rolling_median_5",
+          "electrical_power_rolling_median_10",
+          "electrical_power_rolling_median_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling median of electrical_power",
+        "dependencies": [
+          "electrical_power"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "electrical_power_rolling_std",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "electrical_power"
+        ],
+        "formula": "trailing_rolling_std(electrical_power, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "electrical_power_rolling_std_5",
+          "electrical_power_rolling_std_10",
+          "electrical_power_rolling_std_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling std of electrical_power",
+        "dependencies": [
+          "electrical_power"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "electrical_power_rolling_mad",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "electrical_power"
+        ],
+        "formula": "trailing_rolling_mad(electrical_power, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "electrical_power_rolling_mad_5",
+          "electrical_power_rolling_mad_10",
+          "electrical_power_rolling_mad_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling mad of electrical_power",
+        "dependencies": [
+          "electrical_power"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "Tj_rolling_mean",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "Tj"
+        ],
+        "formula": "trailing_rolling_mean(Tj, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "Tj_rolling_mean_5",
+          "Tj_rolling_mean_10",
+          "Tj_rolling_mean_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling mean of Tj",
+        "dependencies": [
+          "Tj"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "Tj_rolling_median",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "Tj"
+        ],
+        "formula": "trailing_rolling_median(Tj, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "Tj_rolling_median_5",
+          "Tj_rolling_median_10",
+          "Tj_rolling_median_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling median of Tj",
+        "dependencies": [
+          "Tj"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "Tj_rolling_std",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "Tj"
+        ],
+        "formula": "trailing_rolling_std(Tj, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "Tj_rolling_std_5",
+          "Tj_rolling_std_10",
+          "Tj_rolling_std_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling std of Tj",
+        "dependencies": [
+          "Tj"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "Tj_rolling_mad",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "Tj"
+        ],
+        "formula": "trailing_rolling_mad(Tj, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "Tj_rolling_mad_5",
+          "Tj_rolling_mad_10",
+          "Tj_rolling_mad_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling mad of Tj",
+        "dependencies": [
+          "Tj"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "Tc_rolling_mean",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "Tc"
+        ],
+        "formula": "trailing_rolling_mean(Tc, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "Tc_rolling_mean_5",
+          "Tc_rolling_mean_10",
+          "Tc_rolling_mean_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling mean of Tc",
+        "dependencies": [
+          "Tc"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "Tc_rolling_median",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "Tc"
+        ],
+        "formula": "trailing_rolling_median(Tc, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "Tc_rolling_median_5",
+          "Tc_rolling_median_10",
+          "Tc_rolling_median_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling median of Tc",
+        "dependencies": [
+          "Tc"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "Tc_rolling_std",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "Tc"
+        ],
+        "formula": "trailing_rolling_std(Tc, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "Tc_rolling_std_5",
+          "Tc_rolling_std_10",
+          "Tc_rolling_std_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling std of Tc",
+        "dependencies": [
+          "Tc"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "Tc_rolling_mad",
+        "family": "rolling",
+        "level": "observation",
+        "source_parameters": [
+          "Tc"
+        ],
+        "formula": "trailing_rolling_mad(Tc, window)",
+        "expands_over_windows": true,
+        "window_sizes": [
+          5,
+          10,
+          20
+        ],
+        "expanded_names": [
+          "Tc_rolling_mad_5",
+          "Tc_rolling_mad_10",
+          "Tc_rolling_mad_20"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing rolling mad of Tc",
+        "dependencies": [
+          "Tc"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "RDS_on_trend",
+        "family": "trend",
+        "level": "observation",
+        "source_parameters": [
+          "RDS_on"
+        ],
+        "formula": "trailing_linear_regression_slope(RDS_on)",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "RDS_on_trend"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing linear-regression slope of RDS_on over max(window_sizes)",
+        "dependencies": [
+          "RDS_on"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "VTH_trend",
+        "family": "trend",
+        "level": "observation",
+        "source_parameters": [
+          "VTH"
+        ],
+        "formula": "trailing_linear_regression_slope(VTH)",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "VTH_trend"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing linear-regression slope of VTH over max(window_sizes)",
+        "dependencies": [
+          "VTH"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "IGSS_trend",
+        "family": "trend",
+        "level": "observation",
+        "source_parameters": [
+          "IGSS"
+        ],
+        "formula": "trailing_linear_regression_slope(IGSS)",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "IGSS_trend"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing linear-regression slope of IGSS over max(window_sizes)",
+        "dependencies": [
+          "IGSS"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "IDSS_trend",
+        "family": "trend",
+        "level": "observation",
+        "source_parameters": [
+          "IDSS"
+        ],
+        "formula": "trailing_linear_regression_slope(IDSS)",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "IDSS_trend"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing linear-regression slope of IDSS over max(window_sizes)",
+        "dependencies": [
+          "IDSS"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      },
+      {
+        "name": "Tj_trend",
+        "family": "trend",
+        "level": "observation",
+        "source_parameters": [
+          "Tj"
+        ],
+        "formula": "trailing_linear_regression_slope(Tj)",
+        "expands_over_windows": false,
+        "window_sizes": [],
+        "expanded_names": [
+          "Tj_trend"
+        ],
+        "is_causal": true,
+        "is_retrospective": false,
+        "version": "v1",
+        "description": "Trailing linear-regression slope of Tj over max(window_sizes)",
+        "dependencies": [
+          "Tj"
+        ],
+        "is_baseline_dependent": false,
+        "requires_temperature": false
+      }
+    ]
+  },
+  "signal_sets": {
+    "electrical_raw": [
+      "RDS_on",
+      "VTH",
+      "IGSS",
+      "IDSS",
+      "VDS_on",
+      "VF",
+      "VDS",
+      "VGS",
+      "ID",
+      "electrical_power"
+    ],
+    "thermal_raw": [
+      "Tj",
+      "Tc",
+      "Ta"
+    ],
+    "baseline_rolling": [
+      "RDS_on",
+      "VTH",
+      "IGSS",
+      "IDSS",
+      "VDS_on",
+      "electrical_power",
+      "Tj",
+      "Tc"
+    ],
+    "trend": [
+      "RDS_on",
+      "VTH",
+      "IGSS",
+      "IDSS",
+      "Tj"
+    ],
+    "vf_in_baseline_rolling": false
+  },
+  "identifier_columns": {
+    "observation": [
+      "module_id",
+      "test_id",
+      "lot_id",
+      "dataset_id",
+      "timestamp",
+      "cycle_number",
+      "observation_index_within_module"
+    ],
+    "module": [
+      "module_id",
+      "test_id",
+      "lot_id",
+      "dataset_id"
+    ],
+    "module_metadata": [
+      "observation_count",
+      "first_timestamp",
+      "last_timestamp",
+      "time_span_seconds",
+      "first_cycle",
+      "last_cycle",
+      "cycle_span"
+    ]
+  },
+  "feature_counts": {
+    "observation_rows": 375750,
+    "module_rows": 750,
+    "observation_identifier_columns": 7,
+    "observation_feature_columns": 153,
+    "observation_columns": 160,
+    "observation_feature_columns_by_family": {
+      "temporal": 4,
+      "electrical": 10,
+      "thermal": 6,
+      "baseline_relative": 32,
+      "rolling": 96,
+      "trend": 5
+    },
+    "module_aggregate_columns": 918,
+    "module_metadata_columns": 7,
+    "module_identifier_columns": 4,
+    "module_columns": 929,
+    "actual_observation_columns": 160,
+    "actual_module_columns": 929
+  },
+  "feature_designation": {
+    "observation_features_is_causal": true,
+    "observation_features_is_retrospective": false,
+    "module_features_is_causal": false,
+    "module_features_is_retrospective": true,
+    "module_features_boundary": "Module-level aggregates are computed over the complete trajectory. They are retrospective and must not be used as observation-time features for detecting an anomaly at an earlier cycle."
+  },
+  "window_configuration": {
+    "window_sizes": [
+      5,
+      10,
+      20
+    ],
+    "center": false,
+    "causal": true
+  },
+  "baseline_configuration": {
+    "baseline_window_fraction": 0.1,
+    "baseline_min_cycles": 10,
+    "rule": "min(max(baseline_min_cycles, int(n_obs * baseline_window_fraction)), n_obs)",
+    "uses_ground_truth": false,
+    "causal": true
+  },
+  "temperature_normalization_configuration": {
+    "normalization_equation": "RDS_on_normalized = RDS_on_measured / (R_type(Tj) / R_type(T_ref)); R_type(Tj) = R_ref + (R_hot - R_ref) * (Tj - T_ref) / (T_hot - T_ref)",
+    "reference_temperature_C": 25.0,
+    "t_ref_C": 25.0,
+    "t_hot_C": 150.0,
+    "rds_on_ref_mohm": 4.5,
+    "rds_on_hot_mohm": 7.2,
+    "temperature_coefficient_fractional_per_C": 0.0048000000000000004,
+    "required_inputs": [
+      "RDS_on",
+      "Tj"
+    ],
+    "source": "Declared ModuleProfile typicals at T_ref and T_hot (M4 type curve)",
+    "assumptions": [
+      "Linear temperature dependence of RDS_on between T_ref and T_hot",
+      "ModuleProfile typicals at T_ref and T_hot define the type curve",
+      "No second-order temperature effects"
+    ],
+    "behavior_when_Tj_missing": "Returns NaN (missingness preserved)",
+    "behavior_when_RDS_on_missing": "Returns NaN (missingness preserved)",
+    "module_profile_path": "examples/module-profiles/sic-reference-module.json"
+  },
+  "creation_timestamp": "2026-09-22T04:51:53Z",
+  "provenance": {
+    "feature_engineering_version": "v1",
+    "component": "SmartESS Feature Engineering",
+    "processing_step": "feature_transformation"
+  },
+  "extra": {
+    "runtime_seconds": 110.35238091601059
+  }
+}

@@ -164,6 +164,10 @@ Root `ml/` (datasets/generators) and `backend/ml/` (pipeline services) are **bot
 - Anomaly docs `docs/anomaly-detection/anomaly-detection.md`
 - Anomaly tests `backend/tests/test_m7_anomaly_detection.py`
 - CLI `scripts/train_anomaly_model.py`
+- Model evaluation `ml/evaluation/` (M8)
+- Evaluation CLI `scripts/evaluate_anomaly.py`
+- Evaluation tests `backend/tests/test_m8_evaluation.py`
+- Canonical evaluation artifacts (local) `ml/datasets/evaluation/`
 
 **Placeholders only:** remaining `frontend/`, `backend/api/`, `backend/ml/` service wrappers, agents, knowledge, and `knowledge_base/` paths. They contain no APIs, UI, or agents. Root `ml/` holds the generator, validator, features, and Isolation Forest detector.
 
@@ -279,7 +283,38 @@ Do not skip ahead of the current milestone.
 
 ## Current Milestone
 
-**M7 — Baseline Anomaly Detection: COMPLETED**
+**M8 — Model Evaluation: COMPLETED**
+
+M8 is an **evaluation-only** layer over the frozen M7 artifacts. It never retrains, never changes thresholds, and writes exclusively under ``ml/datasets/evaluation/``. M7 score/model directories are not modified.
+
+Evaluation is performed on two overlapping populations:
+
+| View | Population | Modules | Purpose |
+| --- | --- | --- | --- |
+| ``overall_population`` | All 5 lots ``lot-01`` … ``lot-05`` | 750 | Full M7 scoring coverage; stratified by health, mechanism, lot, stage, severity |
+| ``m7_test_lot_compatibility`` | Held-out test lots ``lot-01, lot-04`` | 300 | Regression gate — reproduces the split-specific metrics declared by M7 |
+
+The authoritative M7 held-out test lots (from ``model-record.json`` ``split.lot_holdout``) are ``lot-01`` and ``lot-04``. M8 reproduces the M7-declared test-lot metrics exactly:
+
+- precision **0.8776**, recall **0.4778**, F1 **0.6187**, FPR **0.0286** (TP=43, TN=204, FP=6, FN=47)
+
+Overall-population (750-module) metrics:
+
+- precision **0.9149**, recall **0.3822**, F1 **0.5392**, FPR **0.0152** (TP=86, TN=517, FP=8, FN=139)
+
+Deliverables:
+
+| Artifact | Path |
+| --- | --- |
+| Evaluation package | ``ml/evaluation/`` |
+| CLI | ``scripts/evaluate_anomaly.py`` |
+| Documentation | (this section in ``docs/implementation-status.md``) |
+| Tests | ``backend/tests/test_m8_evaluation.py`` |
+| Canonical evaluation (local) | ``ml/datasets/evaluation/iforest-v1-syn-sic-pc-dev-001-s20260922/`` |
+
+**Next milestone: investigation engine.** Do not start the investigation engine before M8 evaluation is reviewed and accepted.
+
+### M7 — Baseline Anomaly Detection: COMPLETED
 
 Unsupervised Isolation Forest on M6 v1 **observation** features. Lot-level holdout. Ground truth is evaluation-only and is not used in `fit()`. Retrospective module aggregates are not model inputs. M1–M6 contracts are unchanged.
 
@@ -512,4 +547,6 @@ No source document was modified.
 
 ## Validation
 
-Full suite: `python3 -m pytest -W error` — **218 passed, 0 failed, 0 skipped**. Includes ModuleProfile (M1), TestProfile (M2), Telemetry (M3), synthetic generator (M4), dataset validation (M5), feature engineering (M6), and anomaly detection (M7, 8). `python3 -m compileall -q backend ml` succeeded. No ruff/mypy/frontend toolchain is configured yet.
+Full suite: `python3 -m pytest` — **243 passed, 0 failed, 0 skipped**. Includes ModuleProfile (M1), TestProfile (M2), Telemetry (M3), synthetic generator (M4), dataset validation (M5), feature engineering (M6), anomaly detection (M7), and model evaluation (M8). `python3 -m compileall -q backend ml` succeeded. No ruff/mypy/frontend toolchain is configured yet.
+
+M8 additionally verifies the `m7_test_lot_compatibility` regression gate: the held-out test lots `lot-01, lot-04` reproduce precision ≈ 0.8776, recall ≈ 0.4778, F1 ≈ 0.6187, FPR ≈ 0.0286 on the frozen 300-module test population, independent of the 750-module `overall_population` evaluation.
