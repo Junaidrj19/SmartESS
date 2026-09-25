@@ -36,6 +36,12 @@ yarn-error.log*
 chroma/
 .chroma/
 
+# Curated corpus PDFs are obtained manually and may be copyrighted; keep the
+# manifest and directory markers, but do not track the source documents.
+knowledge_base/corpus/**/*.pdf
+knowledge_base/fixtures/*
+!knowledge_base/fixtures/.gitkeep
+
 # Object / generated artifacts
 uploads/
 artifacts/
@@ -44,6 +50,12 @@ ml/datasets/synthetic/*/
 !ml/datasets/synthetic/README.md
 ml/models/*/
 ml/datasets/scores/*/
+ml/datasets/investigations/inv-*/
+
+# Deployment tarball of frozen scientific artifacts (too large / local-only).
+# The packer script and manifest recipe stay in Git; the archive does not.
+deploy/*.tar
+deploy/*.tar.gz
 
 # OS / editor
 .DS_Store

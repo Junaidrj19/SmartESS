@@ -283,7 +283,122 @@ Do not skip ahead of the current milestone.
 
 ## Current Milestone
 
-**M8 — Model Evaluation: COMPLETED**
+**M9 — Multi-Agent Investigation Engine: IMPLEMENTED**
+
+M9 is the agentic investigation layer built on LangGraph orchestration of four agents (Investigation, Evidence, Hypothesis, Report) and nine deterministic engineering tools. It consumes frozen M7/M8 artifacts read-only, retrieves evidence from a ChromaDB reliability knowledge base, and produces structured engineering reports. Ground truth is never read by deterministic tools. The healthy reference is declared independently from frozen M7 un-flagged modules.
+
+Deliverables:
+
+| Artifact | Path |
+| --- | --- |
+| Investigation agents | ``backend/agents/investigation/`` |
+| Deterministic tools | ``backend/agents/investigation/tools/`` |
+| LangGraph orchestrator | ``backend/agents/investigation/orchestrator.py`` |
+| CLI | ``scripts/investigate.py`` |
+| Knowledge base | ``backend/knowledge/`` |
+| ChromaDB retriever | ``backend/knowledge/retrieval.py`` |
+| LLM abstraction | ``backend/llm/`` |
+| FastAPI endpoints | ``backend/api/investigations.py``, ``backend/api/app.py`` |
+| CLI — knowledge ingestion | ``scripts/ingest_knowledge.py`` |
+| CLI — LLM connectivity check | ``scripts/check_llm.py`` |
+| CLI — healthy reference | ``scripts/build_healthy_reference.py`` |
+| Curated corpus | ``knowledge_base/corpus/{standards,manufacturers,papers,reviews}/`` |
+| Corpus manifest | ``knowledge_base/metadata/corpus.json`` |
+| Corpus models / validation | ``backend/knowledge/corpus.py`` |
+| PDF inspection | ``backend/knowledge/pdf.py`` |
+| Coverage / gap analysis | ``knowledge_base/reports/corpus-coverage.md`` |
+| Tests | ``backend/tests/test_m9_investigation.py``, ``test_m9_tools.py``, ``test_m9_llm.py``, ``test_m9_rag.py``, ``test_m9_corpus.py``, ``test_m9_data_access.py`` |
+| Investigation outputs (local) | ``ml/datasets/investigations/`` |
+
+M9 does not modify M7 or M8 artifacts. M7/M8 immutability is verified via hash snapshots at investigation time. LLM calls fall back to a mock client when no API key is configured.
+
+### M9 graph and validation gates
+
+The LangGraph supervisor runs the four agents in order and gates their output:
+
+```text
+START → load_investigation → investigation_agent → evidence_agent
+      → hypothesis_agent → hypothesis_validation
+      → (retry evidence_agent / hypothesis_agent, bounded) → report_agent
+      → report_validation → END
+```
+
+* ``hypothesis_validation`` rejects any candidate whose supporting/contradictory
+evidence id does not resolve to a retrieved ``EvidenceRecord``, any
+``CANDIDATE``/``SUPPORTED``/``CONTRADICTED`` candidate without supporting evidence,
+and any hypothesis with no candidates. Retries are bounded
+(``MAX_HYPOTHESIS_RETRIES = 2``, ``MAX_EVIDENCE_ROUNDS = 2``) and the rejection
+reason is fed back to the hypothesis agent so the retry is informed.
+* ``report_validation`` rejects a report with missing sections, a citation that
+does not resolve to a retrieved evidence record, a mechanism finding asserted as
+``CONFIRMED``, an empty narrative, unwarranted-certainty phrasing, or no
+provenance. All gate outcomes (``PASSED``/``REJECTED``) are appended to the
+investigation provenance.
+
+LLM configuration (``backend/llm/settings.py``) keeps the existing ``LLM_*``
+interface — ``LLM_PROVIDER``, ``LLM_MODEL``, ``LLM_BASE_URL``, ``LLM_API_KEY``,
+``LLM_TIMEOUT`` — with ``.env`` support (``.env`` is git-ignored), and additionally
+honours ``OPENROUTER_API_KEY`` as a fallback key source. When
+``LLM_PROVIDER=openrouter``, the base URL defaults to ``https://openrouter.ai/api/v1``
+and the model to ``meta-llama/llama-3.3-70b-instruct``. The API key is never
+hard-coded, printed, logged, or persisted.
+
+### M9 investigation engine — verified with real inference
+
+| | |
+| --- | --- |
+| Canonical investigation | ``inv-70207e0ffd15`` (``syn-mod-0042``) |
+| Status | ``COMPLETED`` |
+| LLM provider / model | OpenRouter / ``nvidia/nemotron-3-ultra-550b-a55b:free`` (historical — that run's actual model) |
+| Inference | real (not ``MockLLMClient``) |
+| Graph path taken | ``load_investigation → investigation_agent → evidence_agent → hypothesis_agent → hypothesis_validation → report_agent → report_validation`` |
+| Deterministic results | 40 (5 tools) |
+| Evidence records | 5, all with complete provenance (``document_id``, ``chunk_id``, ``citation``, ``url``, page range) |
+| Candidate mechanisms | 5 (ids ``inv-70207e0ffd15-hyp-c1..c5``), every citation resolving to a retrieved ``EvidenceRecord`` |
+| Hypothesis / report validation | ``PASSED`` / ``PASSED`` (0 unresolved citations, 0 errors) |
+
+Note: the paid ``nvidia/nemotron-3-ultra-550b-a55b`` endpoint returned
+``402 Payment Required`` for the investigation-sized request on the available
+(free-tier) OpenRouter account, so the same model's ``:free`` endpoint was used.
+Compatibility of that endpoint with the M9 structured-output path was verified
+first (``scripts/check_llm.py``); no other model was substituted.
+
+### M9 knowledge base — POPULATED (partial coverage)
+
+| | |
+| --- | --- |
+| Corpus version | `1.0.0` |
+| Manifest entries | 37 |
+| Production (`VERIFIED`) documents | 19 |
+| Downloaded and inspected PDFs | 21 |
+| `NEEDS_MANUAL_ACCESS` | 13 |
+| `OCR_REQUIRED` | 1 |
+| `REJECTED` | 1 |
+| `UNVERIFIED` (identity unresolved) | 3 |
+| ChromaDB collection / chunks | `evidence` / 360 |
+| Embedding model | `sentence-transformers/all-MiniLM-L6-v2` |
+
+Source-type distribution (production): 1 standard, 12 manufacturer documents,
+4 peer-reviewed papers, 2 reviews. Mechanism coverage is EXPLICIT for all six
+mechanisms and observable coverage is EXPLICIT for all nine observables; test-condition
+coverage is EXPLICIT for `power_cycling`, `thermal_cycling`, `gate_bias`, `HTRB` and
+`HTGB`, and is thin for `HTOL` (1 document).
+
+**Coverage is not complete.** Four of five standards candidates (AEC-Q101, JEP194,
+JEP183A, JESD22-A108) and five of nine peer-reviewed candidates (P1, P2, P4, P6, P8)
+are paywalled or publisher-blocked, and three candidate titles could not be resolved to
+real documents. Threshold-voltage hysteresis and high-temperature operating life are
+**not** supported by the corpus. See ``knowledge_base/reports/corpus-coverage.md`` for
+the full gap analysis.
+
+Only ``VERIFIED`` documents enter the production ChromaDB collection. Access controls
+were not bypassed at any point; blocked sources are recorded with their official URL and
+the reason, rather than substituted with pirated or mirror copies.
+
+**Next milestone: frontend integration.**
+Do not start M10 before M9 is reviewed and accepted.
+
+### M8 — Model Evaluation: COMPLETED
 
 M8 is an **evaluation-only** layer over the frozen M7 artifacts. It never retrains, never changes thresholds, and writes exclusively under ``ml/datasets/evaluation/``. M7 score/model directories are not modified.
 
@@ -312,7 +427,7 @@ Deliverables:
 | Tests | ``backend/tests/test_m8_evaluation.py`` |
 | Canonical evaluation (local) | ``ml/datasets/evaluation/iforest-v1-syn-sic-pc-dev-001-s20260922/`` |
 
-**Next milestone: investigation engine.** Do not start the investigation engine before M8 evaluation is reviewed and accepted.
+**Next milestone: investigation engine (M9 — completed).**
 
 ### M7 — Baseline Anomaly Detection: COMPLETED
 
@@ -547,6 +662,6 @@ No source document was modified.
 
 ## Validation
 
-Full suite: `python3 -m pytest` — **243 passed, 0 failed, 0 skipped**. Includes ModuleProfile (M1), TestProfile (M2), Telemetry (M3), synthetic generator (M4), dataset validation (M5), feature engineering (M6), anomaly detection (M7), and model evaluation (M8). `python3 -m compileall -q backend ml` succeeded. No ruff/mypy/frontend toolchain is configured yet.
+Full suite: `python3 -m pytest -W error` — **359 passed, 0 failed, 0 skipped**. Includes ModuleProfile (M1), TestProfile (M2), Telemetry (M3), synthetic generator (M4), dataset validation (M5), feature engineering (M6), anomaly detection (M7), model evaluation (M8), multi-agent investigation (M9), curated-corpus validation/statistics/coverage (M9), RAG ingestion/provenance (M9), and LLM configuration / validation-gate / secret-safety tests (M9). `python3 -m compileall -q backend ml scripts` succeeded. No ruff/mypy/frontend toolchain is configured yet.
 
 M8 additionally verifies the `m7_test_lot_compatibility` regression gate: the held-out test lots `lot-01, lot-04` reproduce precision ≈ 0.8776, recall ≈ 0.4778, F1 ≈ 0.6187, FPR ≈ 0.0286 on the frozen 300-module test population, independent of the 750-module `overall_population` evaluation.

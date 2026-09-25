@@ -1,0 +1,48 @@
+{
+  "model_id": "iforest-v1-syn-sic-pc-dev-001-s20260922",
+  "declared_by": "M9 build_healthy_reference",
+  "selection": "frozen M7 unfagged modules (y_pred_module == False)",
+  "declaration_note": "Declared reference population independent of direct Ground Truth access.",
+  "signals": {
+    "RDS_on": {
+      "n": 25050,
+      "mean": 7.1682579347559345,
+      "std": 0.11458252292836373
+    },
+    "VTH": {
+      "n": 25050,
+      "mean": 2.525402354069381,
+      "std": 0.06344537218826635
+    },
+    "IGSS": {
+      "n": 25050,
+      "mean": 0.06380120463114049,
+      "std": 0.02693238239571481
+    },
+    "IDSS": {
+      "n": 25050,
+      "mean": 36.12790982822397,
+      "std": 4.830956935879523
+    },
+    "VDS_on": {
+      "n": 25050,
+      "mean": 2.1470546970715554,
+      "std": 0.03947955476342064
+    },
+    "electrical_power": {
+      "n": 25050,
+      "mean": 722.9019425451168,
+      "std": 13.615138223734274
+    },
+    "Tj": {
+      "n": 25050,
+      "mean": 149.9285233642127,
+      "std": 4.033282834263329
+    },
+    "Tc": {
+      "n": 25050,
+      "mean": 64.24644842604067,
+      "std": 3.921515477017783
+    }
+  }
+}

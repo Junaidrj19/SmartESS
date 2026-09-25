@@ -1,0 +1,238 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   SmartESS design tokens — frontend/UX.md §44 (approved)
+   These are the single source of truth. No component may hard-code a colour,
+   spacing or type value (UX.md §44.10).
+   ========================================================================== */
+
+:root {
+  /* --- 44.1 surfaces, borders, text ------------------------------------- */
+  --ss-bg-base: #0c0f13;
+  --ss-bg-surface: #12161b;
+  --ss-bg-raised: #171c22;
+  --ss-bg-inset: #0a0d10;
+
+  --ss-border-subtle: #232a32;
+  --ss-border-strong: #313a45;
+  --ss-border-width: 1px;
+
+  --ss-text-primary: #e4e9ef;
+  --ss-text-secondary: #a8b2be;
+  --ss-text-muted: #6f7b88;
+  --ss-text-label: #8793a0;
+
+  /* --- 44.2 structural accent (no epistemic meaning) -------------------- */
+  --ss-accent: #4c8dbf;
+  --ss-accent-hover: #5fa0d2;
+  --ss-accent-muted: #21384a;
+  --ss-focus-ring: #6fb3e0;
+
+  /* --- 44.3 semantic state (state only; never alone) -------------------- */
+  --ss-state-neutral: #8793a0;
+  --ss-state-attention: #c9922f;
+  --ss-state-attention-strong: #d9741f;
+  --ss-state-pass: #3f8f6b;
+  --ss-state-reject: #c0453c;
+
+  /* --- 44.4 register tokens (structural first) -------------------------- */
+  --ss-reg-data-surface: var(--ss-bg-surface);
+
+  --ss-reg-calc-surface: var(--ss-bg-raised);
+  --ss-reg-calc-rule: var(--ss-border-strong);
+
+  --ss-reg-evidence-surface: #11171c;
+  --ss-reg-evidence-rule: #2c3a44;
+
+  --ss-reg-llm-surface: #171526;
+  --ss-reg-llm-border: #3a3357;
+  --ss-reg-llm-accent: #8e7bc4;
+
+  --ss-reg-validation-surface: var(--ss-bg-raised);
+
+  --ss-reg-groundtruth-border: #4a4436;
+  --ss-reg-mocked-border: #6b5e2e;
+  --ss-reg-human-border: #313a45;
+
+  /* --- 44.5 spacing: 4 px base, 8 px rhythm ---------------------------- */
+  --ss-space-1: 4px;
+  --ss-space-2: 8px;
+  --ss-space-3: 12px;
+  --ss-space-4: 16px;
+  --ss-space-5: 20px;
+  --ss-space-6: 24px;
+  --ss-space-8: 32px;
+  --ss-space-12: 48px;
+
+  /* --- 44.6 typography -------------------------------------------------- */
+  --ss-font-sans: ui-sans-serif, system-ui, "Inter", "Helvetica Neue", Arial, sans-serif;
+  --ss-font-mono: ui-monospace, "JetBrains Mono", "SFMono-Regular", Menlo, monospace;
+
+  --ss-text-label-size: 11px;
+  --ss-text-body-size: 13px;
+  --ss-text-value-size: 13px;
+  --ss-text-section-size: 15px;
+  --ss-text-title-size: 18px;
+
+  --ss-leading-tight: 1.25;
+  --ss-leading-body: 1.5;
+  --ss-measure-prose: 80ch;
+
+  /* --- 44.7 radius (minimal rounding; no shadows) ----------------------- */
+  --ss-radius-sm: 2px;
+  --ss-radius-md: 3px;
+
+  /* --- 44.8 chart tokens ------------------------------------------------ */
+  --ss-chart-grid: #1e242b;
+  --ss-chart-axis: #55616e;
+
+  --ss-signal-rds-on: #6fa8dc;
+  --ss-signal-vth: #93c47d;
+  --ss-signal-igss: #e0a458;
+  --ss-signal-idss: #c98ac9;
+  --ss-signal-vds-on: #7fc3c0;
+  --ss-signal-electrical-power: #b8a46a;
+  --ss-signal-tj: #e08a7a;
+  --ss-signal-tc: #8fa0c4;
+
+  --ss-marker-anomaly: #d9741f;
+  --ss-marker-baseline-flag: #4c8dbf;
+  --ss-reference-band: #2a323a;
+}
+
+/* Expose the tokens to Tailwind utilities (Tailwind v4 CSS-first config).
+   Utilities are generated from the same custom properties above, so there is
+   exactly one definition of every value. */
+@theme inline {
+  --color-bg-base: var(--ss-bg-base);
+  --color-bg-surface: var(--ss-bg-surface);
+  --color-bg-raised: var(--ss-bg-raised);
+  --color-bg-inset: var(--ss-bg-inset);
+
+  --color-border-subtle: var(--ss-border-subtle);
+  --color-border-strong: var(--ss-border-strong);
+
+  --color-text-primary: var(--ss-text-primary);
+  --color-text-secondary: var(--ss-text-secondary);
+  --color-text-muted: var(--ss-text-muted);
+  --color-text-label: var(--ss-text-label);
+
+  --color-accent: var(--ss-accent);
+  --color-accent-hover: var(--ss-accent-hover);
+  --color-accent-muted: var(--ss-accent-muted);
+
+  --color-state-neutral: var(--ss-state-neutral);
+  --color-state-attention: var(--ss-state-attention);
+  --color-state-attention-strong: var(--ss-state-attention-strong);
+  --color-state-pass: var(--ss-state-pass);
+  --color-state-reject: var(--ss-state-reject);
+
+  --color-reg-calc-surface: var(--ss-reg-calc-surface);
+  --color-reg-calc-rule: var(--ss-reg-calc-rule);
+  --color-reg-evidence-surface: var(--ss-reg-evidence-surface);
+  --color-reg-evidence-rule: var(--ss-reg-evidence-rule);
+  --color-reg-llm-surface: var(--ss-reg-llm-surface);
+  --color-reg-llm-border: var(--ss-reg-llm-border);
+  --color-reg-llm-accent: var(--ss-reg-llm-accent);
+  --color-reg-groundtruth-border: var(--ss-reg-groundtruth-border);
+  --color-reg-mocked-border: var(--ss-reg-mocked-border);
+  --color-reg-human-border: var(--ss-reg-human-border);
+
+  --font-sans: var(--ss-font-sans);
+  --font-mono: var(--ss-font-mono);
+
+  --text-label: var(--ss-text-label-size);
+  --text-body: var(--ss-text-body-size);
+  --text-value: var(--ss-text-value-size);
+  --text-section: var(--ss-text-section-size);
+  --text-title: var(--ss-text-title-size);
+
+  --radius-sm: var(--ss-radius-sm);
+  --radius-md: var(--ss-radius-md);
+}
+
+/* ============================================================================
+   Base
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  border-color: var(--ss-border-subtle);
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: var(--ss-bg-base);
+  color: var(--ss-text-primary);
+  font-family: var(--ss-font-sans);
+  font-size: var(--ss-text-body-size);
+  line-height: var(--ss-leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Machine identifiers and measurements: monospace with tabular numerals.
+   UX.md §44.6 makes this mandatory. */
+.ss-mono {
+  font-family: var(--ss-font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--ss-text-value-size);
+}
+
+/* Small uppercase field labels; the value carries the emphasis. */
+.ss-field-label {
+  font-size: var(--ss-text-label-size);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ss-text-label);
+  line-height: var(--ss-leading-tight);
+}
+
+/* Visible focus state, ≥3:1 against all surfaces (UX.md §34). */
+:focus-visible {
+  outline: 2px solid var(--ss-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Hatched fill for GROUND TRUTH and MOCKED INFERENCE. 4 px repeating diagonal
+   at 12 % opacity, so the state survives greyscale and colour-blind rendering
+   (UX.md §44.4). */
+.ss-hatch {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgb(255 255 255 / 0.12) 0px,
+    rgb(255 255 255 / 0.12) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+/* No motion is load-bearing (UX.md §34). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Accessible-only text, used for chart descriptions and table captions. */
+.ss-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border-width: 0;
+}
