@@ -1,37 +1,45 @@
 #!/usr/bin/env bash
-# Link the frozen scientific artifacts from the Render persistent disk into the
-# repository tree before the API starts.
+# Link the frozen scientific artifacts from the platform persistent volume into
+# the repository tree before the API starts.
 #
 # The application resolves every artifact relative to the repository root
 # (backend/agents/investigation/data_access.py, backend/api/projections.py), and
 # those artifacts are gitignored, so a git-based deploy checks out without them.
-# The disk holds the exact files unpacked from
+# The volume holds the exact files unpacked from
 # deploy/smartess-scientific-artifacts.tar; this script only creates symlinks.
 #
 # It never regenerates, rewrites, or synthesises an artifact, and it never
 # overwrites a file that is tracked in git: a repository path that already
 # exists is left alone.
 #
-# Local development is unaffected. When the disk is absent the script logs what
+# The artifact root is resolved in this order, so the same script serves Railway
+# (which injects RAILWAY_VOLUME_MOUNT_PATH), Render, and a local rehearsal:
+#   1. SMARTESS_ARTIFACT_ROOT   explicit override
+#   2. RAILWAY_VOLUME_MOUNT_PATH  Railway volume
+#   3. /var/data                default mount point
+#
+# Local development is unaffected. When the volume is absent the script logs what
 # is missing and exits 0, so `GET /readiness` reports precise blockers instead of
 # the service entering a crash loop.
 set -euo pipefail
 
-ARTIFACT_ROOT="${SMARTESS_ARTIFACT_ROOT:-/var/data}"
+ARTIFACT_ROOT="${SMARTESS_ARTIFACT_ROOT:-${RAILWAY_VOLUME_MOUNT_PATH:-/var/data}}"
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 log() { printf '%s bootstrap %s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$*"; }
 
 if [ ! -d "$ARTIFACT_ROOT" ]; then
   log "ERROR artifact root $ARTIFACT_ROOT does not exist; scientific artifacts unavailable"
-  log "seed it once from the Render shell: tar -xf deploy/smartess-scientific-artifacts.tar -C $ARTIFACT_ROOT"
+  log "seed it once from a shell on the service: tar -xf smartess-scientific-artifacts.tar -C $ARTIFACT_ROOT"
   exit 0
 fi
+
+log "artifact root $ARTIFACT_ROOT"
 
 # Investigation records are written at runtime
 # (backend/agents/investigation/persistence.py INVESTIGATIONS_ROOT), so this
 # directory is linked whole rather than per-file. That puts new investigations on
-# the disk, where they survive a restart or redeploy.
+# the volume, where they survive a restart or redeploy.
 INV_REL="ml/datasets/investigations"
 INV_DISK="$ARTIFACT_ROOT/$INV_REL"
 INV_REPO="$REPO_ROOT/$INV_REL"

@@ -6,7 +6,7 @@
 # limit (observation-features.parquet is 421 MB), so they cannot arrive with the
 # checkout. They live on the persistent disk below, seeded once from the Render
 # shell with deploy/smartess-scientific-artifacts.tar, and are linked into the
-# repository tree by scripts/render_bootstrap.sh at start.
+# repository tree by scripts/artifact_bootstrap.sh at start.
 services:
   - type: web
     name: smartess-api
@@ -19,7 +19,7 @@ services:
     buildCommand: pip install --upgrade pip && pip install .
     # backend/api/app.py:main() already honours Render's PORT and binds to
     # SMARTESS_HOST, so the documented entry point is used unchanged.
-    startCommand: ./scripts/render_bootstrap.sh && python3 -m backend.api.app
+    startCommand: ./scripts/artifact_bootstrap.sh && python3 -m backend.api.app
     # Process liveness only. Dependency state is GET /readiness, which must not
     # gate liveness or a missing artifact would stop the service from booting at
     # all and hide the diagnosis.
