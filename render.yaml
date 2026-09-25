@@ -1,0 +1,65 @@
+# Render blueprint for the SmartESS Python API.
+#
+# The Next.js frontend stays on Vercel; this file deploys the backend only.
+#
+# The frozen scientific artifacts are gitignored and exceed GitHub's per-file
+# limit (observation-features.parquet is 421 MB), so they cannot arrive with the
+# checkout. They live on the persistent disk below, seeded once from the Render
+# shell with deploy/smartess-scientific-artifacts.tar, and are linked into the
+# repository tree by scripts/render_bootstrap.sh at start.
+services:
+  - type: web
+    name: smartess-api
+    runtime: python
+    # A persistent disk requires a paid instance type. The disk also keeps
+    # investigation records across restarts and redeploys.
+    plan: starter
+    branch: main
+    rootDir: .
+    buildCommand: pip install --upgrade pip && pip install .
+    # backend/api/app.py:main() already honours Render's PORT and binds to
+    # SMARTESS_HOST, so the documented entry point is used unchanged.
+    startCommand: ./scripts/render_bootstrap.sh && python3 -m backend.api.app
+    # Process liveness only. Dependency state is GET /readiness, which must not
+    # gate liveness or a missing artifact would stop the service from booting at
+    # all and hide the diagnosis.
+    healthCheckPath: /health
+    disk:
+      name: smartess-artifacts
+      mountPath: /var/data
+      # ~520 MB of artifacts unpacked, plus headroom for investigation records.
+      sizeGB: 5
+    envVars:
+      # Matches the verified local interpreter (3.13.5); pyproject requires >=3.11.
+      - key: PYTHON_VERSION
+        value: 3.13.5
+      - key: APP_ENV
+        value: production
+      - key: LLM_PROVIDER
+        value: openrouter
+      - key: LLM_MODEL
+        value: meta-llama/llama-3.3-70b-instruct
+      - key: LLM_BASE_URL
+        value: https://openrouter.ai/api/v1
+      - key: LLM_TIMEOUT
+        value: "180"
+      # Render assigns PORT; app.py reads it. Do not pin it here.
+      - key: SMARTESS_HOST
+        value: 0.0.0.0
+      - key: EMBEDDING_MODEL
+        value: sentence-transformers/all-MiniLM-L6-v2
+      # Repo-relative, valid because the bootstrap links the disk copy into place.
+      - key: CHROMA_PATH
+        value: ./knowledge_base/chroma
+      - key: SMARTESS_ARTIFACT_ROOT
+        value: /var/data
+      - key: LOG_LEVEL
+        value: INFO
+      # Set in the Render dashboard only. The rotated OpenRouter credential must
+      # never reach git, the Vercel project, or the browser bundle.
+      - key: LLM_API_KEY
+        sync: false
+      # The actual Vercel production origin, verified reachable (HTTP 200).
+      # Never "*".
+      - key: SMARTESS_CORS_ORIGINS
+        value: https://smart-ess2.vercel.app
