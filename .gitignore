@@ -51,6 +51,8 @@ ml/datasets/synthetic/*/
 ml/models/*/
 ml/datasets/scores/*/
 ml/datasets/investigations/inv-*/
+# Generated feature matrix exceeds GitHub's 100 MB file limit.
+ml/datasets/features/**/*.csv
 
 # Deployment tarball of frozen scientific artifacts (too large / local-only).
 # The packer script and manifest recipe stay in Git; the archive does not.
